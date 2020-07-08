@@ -1,0 +1,28 @@
+{
+  "name": "shindy",
+  "version": "1.0.0",
+  "description": "Host your own virtual shindig",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "shindy"
+  },
+  "keywords": [
+    "party",
+    "game",
+    "video",
+    "chat"
+  ],
+  "author": "Danielle Ali & Yaseen Ali",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.3",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4",
+    "socketio": "^1.0.0"
+  }
+}
