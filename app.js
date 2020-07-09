@@ -1,6 +1,7 @@
 //  LAUNCH SERVER AND ALL PACKAGES
 const express = require ('express')
 const app = express()
+const PORT = process.env.PORT || 3000
 
 var http = require('http').createServer(app)
 
@@ -15,9 +16,9 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
-// Listen on port 3000
-http.listen(3000, () => {
-    console.log('listening on port 3000')
+// Listen on whatever the defined port is (not only 3000)
+http.listen(PORT, () => {
+    console.log(`listening on ${PORT}`)
 })
 
 //CONFIGURING SOCKET.IO
@@ -26,9 +27,9 @@ const io = require("socket.io")(http)
 
 //listen on every connection 
 io.on('connection', (socket) => {
-    console.log('New user connected') //logs in the terminal!
+    console.log('Client connected') //logs in the terminal!
     socket.on('disconnect', () => {
-        console.log('user disconnected')
+        console.log('Client disconnected')
     })
 
     //default username
