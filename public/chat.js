@@ -8,7 +8,6 @@ $(function(){
     var send_message = $('#send_message')
     var send_username = $('#send_username')
     var chatroom = $('#chatroom')
-    var feedback = $('#feedback')
 
     // Emit a username
     send_username.click(function() {
@@ -31,5 +30,18 @@ $(function(){
         if(e.keyCode==13)
             send_message.click();
       })
+
+    navigator.getUserMedia(
+    { video: true, audio: true },
+    stream => {
+        const localVideo = document.getElementById("local-video");
+        if (localVideo) {
+        localVideo.srcObject = stream;
+        }
+    },
+    error => {
+        console.warn(error.message);
+    }
+    );
 })
 
