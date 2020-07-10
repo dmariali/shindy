@@ -11,7 +11,7 @@ app.set('view engine', 'ejs')
 //middlewares
 app.use(express.static('public'))
 
-//routes
+//Handle Routes
 app.get('/', (req, res) => {
     res.render('index')
 })
