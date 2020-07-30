@@ -11,15 +11,15 @@ $(function(){
     // Peer takes 1- ID, put undefined to let the server handle that
     // then { host: 3001 locally or 'your-app-name.herokuapp.com', port is either 9000 or 443(if using https)}
     // if using https include secure: true
-    const myPeer = new Peer (undefined, {
-      secure: true,
-      host: 'shindy-app.herokuapp.com/',
-      port: '443'
-    })
+    // const myPeer = new Peer (undefined, {
+    //   secure: true,
+    //   host: 'shindy-app.herokuapp.com/',
+    //   port: '443'
+    // })
 
-    myPeer.on('open', id => {
-      socket.emit('join_room', ROOM_ID, id)       
-    })
+    // myPeer.on('open', id => {
+    //   socket.emit('join_room', ROOM_ID, id)       
+    // })
 
     // Emit message
     send_message.click(function() {
@@ -55,26 +55,24 @@ $(function(){
     .then(stream => {
         addVideoStream (myVideo, stream)
         //listen for when new users call you
-        myPeer.on('call', call => {
-          call.answer(stream)
-          const video = document.createElement('video')
-          call.on('stream', userVideoStream => {
-            addVideoStream(video, userVideoStream)
-          })
-        })
+        // myPeer.on('call', call => {
+        //   call.answer(stream)
+        //   const video = document.createElement('video')
+        //   call.on('stream', userVideoStream => {
+        //     addVideoStream(video, userVideoStream)
+        //   })
+        // })
         //send your video input to other users
         socket.on('user_connected', userId => {
           connectToNewUser(userId, stream)
-        })
-        // stream.getTracks().forEach(track => peerConnection.addTrack(track, stream));
-          
+        })          
     })
     .catch(function(error) {
         console.warn(error.message)
     }); 
     
     function connectToNewUser (userId, stream) {
-      const call = myPeer.call(userId, stream)
+      // const call = myPeer.call(userId, stream)
       const video = document.createElement('video')
 
       call.on('stream', userVideoStream => {
