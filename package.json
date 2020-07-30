@@ -2,7 +2,7 @@
   "name": "shindy",
   "version": "1.0.0",
   "description": "Host your own virtual shindig",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon server.js"
   },
