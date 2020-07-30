@@ -11,11 +11,7 @@ $(function(){
     // Peer takes 1- ID, put undefined to let the server handle that
     // then { host: 3001 locally or 'your-app-name.herokuapp.com', port is either 9000 or 443(if using https)}
     // if using https include secure: true
-    const myPeer = new Peer (undefined, {
-      secure: true,
-      host: 'shindy-app.herokuapp.com/',
-      port: '443'
-    })
+    const myPeer = new Peer ()
 
     myPeer.on('open', id => {
       socket.emit('join_room', ROOM_ID, id)       
