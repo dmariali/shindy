@@ -37,7 +37,7 @@ app.use(express.static('public')) // all our js and css will be inside 'public' 
 app.use(express.urlencoded({ extended: false }))
 app.use(flash())
 app.use(session ({
-  secret: process.env.SESSION_SECRET,
+  secret: 'some-secret',
   resave: false,
   saveUninitialized : false
 }))
