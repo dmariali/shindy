@@ -1,0 +1,131 @@
+// Imports
+@import 'colors'; 
+@import 'layout';
+
+/* STYLE */
+body {
+	padding: 0;
+    margin: 0;
+    height: 100%; 
+    background-color: $bgcolor;
+}
+
+header {
+    text-align: center;
+    color: map-get($colors, header-text)
+}
+
+h1 {
+    font-family: 'Comfortaa', sans-serif;
+    margin: 0px;
+}
+
+section#chatroom {
+    margin: auto;
+    padding: 0 20px 0 0;
+    list-style: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+section#chatroom p {
+    position: relative;
+    clear: both;
+    display: inline-block;
+    padding: 16px 20px 16px 20px;
+    margin: auto;
+    font: 16px/20px 'Noto Sans', sans-serif;
+    border-radius: 10px;
+}
+
+section#chat_input_zone {
+    height: 5%;
+    text-align: center;
+    bottom: 0;
+    margin: auto;
+    width: 100%;
+    position: fixed;
+    background: map-get($colors, chat-bg);
+    border: 5px outset map-get($colors, chat-bg);
+}
+
+.vertical-align {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+input#username {
+    font-family: 'Comfortaa', sans-serif;
+}
+
+input#message {
+    display: inline-block;
+    width: 88%;
+    height: 70%;
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 2vh;
+}
+
+button#send_message {
+    display: inline-block;
+    height: 70%;
+    width: 10%;
+}
+
+.message {
+    width: 75%;
+    height: 2vh;
+    line-height: 2vh;
+    font-size: 1em;
+    font-family: 'Comfortaa', sans-serif;
+}
+
+.message:nth-child(even) {
+    background-color: #151735;
+    color: white;
+}
+
+.message:nth-child(odd) {
+    background-color: #224b6b
+}
+
+/* adding video functionality */   
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* login and register forms */
+.login-form {
+    width: 300px;
+    margin: 0 auto;
+    font-family: Tahoma, Geneva, sans-serif;
+}
+.login-form h1 {
+    text-align: center;
+    color: #4d4d4d;
+    font-size: 24px;
+    padding: 20px 0 20px 0;
+}
+.login-form input[type="password"],
+.login-form input[type="text"] {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #dddddd;
+    margin-bottom: 15px;
+    box-sizing:border-box;
+}
+.login-form input[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background-color: #535b63;
+    border: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-weight: bold;
+    color: $bgcolor;
+}

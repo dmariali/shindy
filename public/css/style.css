@@ -1,0 +1,177 @@
+.content-container {
+  width: 100%;
+  height: 95%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 25% 25% 25% 25%;
+      grid-template-columns: 25% 25% 25% 25%;
+  -ms-grid-rows: 75% 25%;
+      grid-template-rows: 75% 25%;
+      grid-template-areas: "game game game chat" "game game game chat" "video video video chat";
+}
+
+section#game-area {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 2;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-area: game;
+  background-color: pink;
+}
+
+section#video-area {
+  -ms-grid-row: 3;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-area: video;
+  background-color: white;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (150px)[auto-fill];
+      grid-template-columns: repeat(auto-fill, 150px);
+  grid-gap: 10px;
+  -ms-grid-rows: 150px;
+      grid-template-rows: 150px;
+}
+
+section#chat-area {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 3;
+  -ms-grid-column: 4;
+  grid-area: chat;
+  background-color: grey;
+}
+
+/* STYLE */
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  background-color: white;
+}
+
+header {
+  text-align: center;
+  color: #183850;
+}
+
+h1 {
+  font-family: 'Comfortaa', sans-serif;
+  margin: 0px;
+}
+
+section#chatroom {
+  margin: auto;
+  padding: 0 20px 0 0;
+  list-style: none;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+section#chatroom p {
+  position: relative;
+  clear: both;
+  display: inline-block;
+  padding: 16px 20px 16px 20px;
+  margin: auto;
+  font: 16px/20px 'Noto Sans', sans-serif;
+  border-radius: 10px;
+}
+
+section#chat_input_zone {
+  height: 5%;
+  text-align: center;
+  bottom: 0;
+  margin: auto;
+  width: 100%;
+  position: fixed;
+  background: grey;
+  border: 5px outset grey;
+}
+
+.vertical-align {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+input#username {
+  font-family: 'Comfortaa', sans-serif;
+}
+
+input#message {
+  display: inline-block;
+  width: 88%;
+  height: 70%;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 2vh;
+}
+
+button#send_message {
+  display: inline-block;
+  height: 70%;
+  width: 10%;
+}
+
+.message {
+  width: 75%;
+  height: 2vh;
+  line-height: 2vh;
+  font-size: 1em;
+  font-family: 'Comfortaa', sans-serif;
+}
+
+.message:nth-child(even) {
+  background-color: #151735;
+  color: white;
+}
+
+.message:nth-child(odd) {
+  background-color: #224b6b;
+}
+
+/* adding video functionality */
+video {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+/* login and register forms */
+.login-form {
+  width: 300px;
+  margin: 0 auto;
+  font-family: Tahoma, Geneva, sans-serif;
+}
+
+.login-form h1 {
+  text-align: center;
+  color: #4d4d4d;
+  font-size: 24px;
+  padding: 20px 0 20px 0;
+}
+
+.login-form input[type="password"],
+.login-form input[type="text"] {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #dddddd;
+  margin-bottom: 15px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.login-form input[type="submit"] {
+  width: 100%;
+  padding: 15px;
+  background-color: #535b63;
+  border: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+}
+/*# sourceMappingURL=style.css.map */

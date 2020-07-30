@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" const="text/html;charset=UTF-8" />
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/style.css" >
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script>
+      const ROOM_ID = "<%= roomId %>"
+    </script>
+    <script  defer src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+
+    <title>Shindy</title>
+
+  </head>
+
+  <body>
+    <header>
+      <h1> SHINDY</h1>
+      <form action="/logout?_method=DELETE" method=POST>
+        <button type="submit">LogOut</button>
+      </form>
+    </header>
+
+    <div class="content-container">
+      
+      <!-- Area where game will show -->
+      <section id = "game-area">
+        <h1> GAME HERE!! </h1>
+      </section>
+  
+      <!-- Area where video will show -->
+      <section id="video-area">
+      </section>
+      
+      <!-- area for text chat -->
+      <section id= "chat-area">
+        <section id="chatroom"> </section> 
+        <section id="chat_input_zone"> 
+          <input id="message" class="vertical-align" type="text" />
+          <button id="send_message" class="vertical-align" type="button">Send</button>
+        </section>
+    </section>
+    </div>
+  </div>   
+
+    
+
+    <script defer src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script defer src="chat.js"></script>
+  </body>
+</html>

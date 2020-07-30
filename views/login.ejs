@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" const="text/html;charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" >
+    <title>Login</title>
+  </head>
+
+  <body>
+    <header>
+      <h1> LOGIN </h1>
+    </header>
+
+    <% if (messages.error) { %>
+      <%= messages.error %>
+    <% } %>
+
+
+    <div class="login-form">
+			<form action="/login" method="POST">
+				<input type="text" name="username" placeholder="Username" required>
+				<input type="password" name="password" placeholder="Password" required>
+				<input type="submit">
+      </form>
+      <br/>
+      <a href='/register'>New User? Register Here</a>
+		</div>
+
+
+    
+     
+  </body>
+</html>
