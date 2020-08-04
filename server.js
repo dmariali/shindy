@@ -1,11 +1,12 @@
-// GET ENVIRONMENT VARIABLES when in development
-if (process.env.NODE_ENV !== 'production') {
-  require ('dotenv').config()
+if (process.env.NODE_ENV !== "production") {
+  require('dotenv').config()
 }
 
 //  LAUNCH SERVER AND ALL PACKAGES
 const express = require ('express')
 const app = express()
+// express ejs layouts allows you to build a page template for all pages in your app
+const expressLayouts = require('express-ejs-layouts')
 // use the environment port (for heroku deployment) or 3000 if used locally
 const PORT = process.env.PORT || 3000
 //for encrypting the password
@@ -18,6 +19,18 @@ const session = require ('express-session')
 const methodOverride = require ('method-override')
 //use to generate random uuid for room ids
 const {v4: uuidV4} = require ('uuid')
+
+// integrate mongodb into our application
+const mongoose = require('mongoose')
+// set up database connection
+mongoose.connect(process.env.DATABASE_URL, {
+  useNewUrlParser: true
+})
+const db = mongoose.connection 
+db.on('error', error => console.error(error))
+db.once('open', () => console.error("Connected to Mongoose"))
+
+const indexRouter = require ("./routes/index")
 
 //NOT IDEAL - need to connect to database
 const users = []
@@ -32,8 +45,15 @@ initializePassport(
 //set up how we will access our views - using ejs which we installed
 app.set('view engine', 'ejs')
 
+//define where our views will be stored (in a folder named views that's in our current directory)
+app.set("views", __dirname+'/views')
+
+// define where the layout file will be 
+app.set('layout', 'layouts/layout')
+
 //middlewares
 app.use(express.static('public')) // all our js and css will be inside 'public' folder
+app.use(expressLayouts)
 app.use(express.urlencoded({ extended: false }))
 app.use(flash())
 app.use(session ({
@@ -46,9 +66,7 @@ app.use(passport.session())
 app.use(methodOverride('_method'))
 
 //Handle Routes
-app.get('/', (req, res) => {
-    res.render('index.ejs')
-})
+app.get('/', indexRouter)
 app.get('/login', checkNotAuthenticated, (req, res) => {
   res.render('login.ejs')
 })
