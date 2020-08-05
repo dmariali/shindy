@@ -13,12 +13,15 @@ const PORT = process.env.PORT || 3000
 const bcrypt = require ('bcrypt')
 // handle authentication   
 const passport = require ('passport') 
+// show flash messages
 const flash = require ('express-flash')
 const session = require ('express-session')
 //allows us to use methods other than POST and GET in forms
 const methodOverride = require ('method-override')
 //use to generate random uuid for room ids
 const {v4: uuidV4} = require ('uuid')
+// make it easier to access the different input elements from our server
+const bodyParser = require('body-parser')
 
 // integrate mongodb into our application
 const mongoose = require('mongoose')
@@ -30,7 +33,9 @@ const db = mongoose.connection
 db.on('error', error => console.error(error))
 db.once('open', () => console.error("Connected to Mongoose"))
 
+//connect router files
 const indexRouter = require ("./routes/index")
+const userRouter = require("./routes/users")
 
 //NOT IDEAL - need to connect to database
 const users = []
@@ -64,9 +69,12 @@ app.use(session ({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
+app.use(bodyParser.urlencoded({limit:'10mb', extended: false}))
 
 //Handle Routes
-app.get('/', indexRouter)
+app.use('/', indexRouter)
+app.use('/users', userRouter)
+
 app.get('/login', checkNotAuthenticated, (req, res) => {
   res.render('login.ejs')
 })

@@ -1,0 +1,12 @@
+<h2> Search Users </h2>
+<form action="/users" method = "GET">
+    <label> Name </label>
+    <input type ="text" name="name">
+    <button type ="submit">Search</button>
+</form> 
+
+<br/>
+
+<% users.forEach(user => { %>
+    <div><%= user.name %></div>
+<% }) %>

@@ -1,7 +1,7 @@
 # shindy
 A video chat group game play application
 
-Run:  npm install --save express socketio ejs bcrypt passport passport-local express-session express-flash dotenv method-override uuid express-ejs-layouts mongoose
+Run:  npm install --save express socketio ejs bcrypt passport passport-local express-session express-flash dotenv method-override uuid express-ejs-layouts mongoose body-parser
 then: npm i --save-dev nodemon
 then:  npm run start
 
