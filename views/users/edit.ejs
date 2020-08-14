@@ -1,0 +1,14 @@
+<header>
+    <h1> UPDATE USER INFO</h1>
+</header>
+
+<div class="login-form">
+    <form method="POST" action="/users/<%= user.id %>?_method=PUT" >
+        <label> Name </label>
+        <input type="text" name="name" value = <%= user.name %>>
+        <input type="password" name="password" placeholder="Password" required>
+        <a href="/users/<%= user.id %>">Cancel</a>
+        <button type="submit">Update</button>
+    </form>
+    <br/>
+</div>

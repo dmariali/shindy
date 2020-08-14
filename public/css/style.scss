@@ -1,23 +1,18 @@
 // Imports
 @import 'colors'; 
 @import 'layout';
+@import 'header';
 
 /* STYLE */
+html {
+    font-family: Arial, Helvetica, sans-serif; 
+    height: 100%;
+}
 body {
 	padding: 0;
     margin: 0;
     height: 100%; 
     background-color: $bgcolor;
-}
-
-header {
-    text-align: center;
-    color: map-get($colors, header-text)
-}
-
-h1 {
-    font-family: 'Comfortaa', sans-serif;
-    margin: 0px;
 }
 
 section#chatroom {
@@ -57,15 +52,10 @@ section#chat_input_zone {
     transform: translateY(-50%);
 }
 
-input#username {
-    font-family: 'Comfortaa', sans-serif;
-}
-
 input#message {
     display: inline-block;
     width: 88%;
     height: 70%;
-    font-family: 'Comfortaa', sans-serif;
     font-size: 2vh;
 }
 
@@ -80,7 +70,6 @@ button#send_message {
     height: 2vh;
     line-height: 2vh;
     font-size: 1em;
-    font-family: 'Comfortaa', sans-serif;
 }
 
 .message:nth-child(even) {

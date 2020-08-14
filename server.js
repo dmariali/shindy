@@ -34,7 +34,6 @@ db.on('error', error => console.error(error))
 db.once('open', () => console.error("Connected to Mongoose"))
 
 //connect router files
-const indexRouter = require ("./routes/index")
 const userRouter = require("./routes/users")
 
 //NOT IDEAL - need to connect to database
@@ -71,8 +70,12 @@ app.use(passport.session())
 app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({limit:'10mb', extended: false}))
 
-//Handle Routes
-app.use('/', indexRouter)
+//------ HANDLE ROUTING -------
+app.get('/',  (req, res) => {
+  res.render('index.ejs', {logged_in: req.isAuthenticated()})
+})
+
+// got to UserRouter for anything with subdomain /users
 app.use('/users', userRouter)
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
@@ -85,6 +88,14 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 app.get('/:room', (req, res) => {
   res.render('room.ejs', {roomId: req.params.room})
 })
+
+// if the user is not authenticated, take them to the login page
+function checkAuthenticated (req, res, next) {
+  if (req.isAuthenticated()) {
+    return next()
+  }
+  res.redirect('/login')
+}
 
 app.post ('/login', checkNotAuthenticated, passport.authenticate('local', {
   successRedirect : `/${uuidV4()}`,
@@ -108,18 +119,11 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
     }
 })
 
+// add logout functionality
 app.delete('/logout', (req, res)=> {
   req.logOut()
   res.redirect('/login')
 })
-
-// if the user is not authenticated, take them to the login page
-function checkAuthenticated (req, res, next) {
-  if (req.isAuthenticated()) {
-    return next()
-  }
-  res.redirect('/login')
-}
 
 // if user already authenticated don't take them to the register or login pages
 function checkNotAuthenticated(req, res, next) {

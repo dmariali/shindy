@@ -2,12 +2,11 @@
     width: 100%;
     height: 95%;
     display: grid; 
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: 75% 25%;
     grid-template-rows: 75% 25%;
     grid-template-areas: 
-        "game game game chat"
-        "game game game chat"
-        "video video video chat";
+        "game chat"
+        "video chat";
 }
 
 section#game-area {
@@ -17,14 +16,18 @@ section#game-area {
 
 section#video-area {
     grid-area:video;
-    background-color: map-get($colors, video-bg);
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 150px);
-    grid-gap: 10px; 
-    grid-template-rows: 150px;
+    background-color: map-get($colors, video-bg);   
 }
 
 section#chat-area{
     grid-area:chat;
     background-color: map-get($colors, chat-bg);
 }
+
+#footer {
+    margin: 0 auto;
+    width: 300px;
+}
+
+
+

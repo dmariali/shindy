@@ -1,0 +1,16 @@
+<h2><%= user.name%></h2>
+<a href = "users/<%= user.id%>edit"> Edit </a>
+<!-- need to use a form here and not just a link to delete because when google is 
+scraping your site it will select all the links and if it is a link it will
+delete everything from your site... never ever put a delete into a link!! -->
+<form method = "POST" action="/users/<%= user.id %>?_method=DELETE">
+    <!-- using method override which was installed!  -->
+    <button type="submit"> Delete </button>
+</form>
+
+<% if (gamesPlayed.length >0) { %>
+    <h2>GAMES PLAYED</h2>
+    <% gamesPlayed.forEach(game => {%>
+        <p><%= game %></p>
+    <% }) %>
+<% } %>

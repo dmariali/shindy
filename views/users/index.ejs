@@ -1,12 +1,17 @@
-<h2> Search Users </h2>
-<form action="/users" method = "GET">
-    <label> Name </label>
-    <input type ="text" name="name">
-    <button type ="submit">Search</button>
-</form> 
+<h1> All Shindy Users </h1>
 
-<br/>
-
+<div id="user_list">
 <% users.forEach(user => { %>
     <div><%= user.name %></div>
+    <a href="users/<%= user.id %>">View</a>
+    <a href="users/<%= user.id %>/edit">Edit</a>
+
+    <!-- need to use a form here and not just a link to delete because when google is 
+    scraping your site it will select all the links and if it is a link it will
+    delete everything from your site... never ever put a delete into a link!! -->
+    <form method = "POST" action="/users/<%= user.id %>?_method=DELETE">
+        <!-- here we are using method override which was installed!  -->
+        <button type="submit"> Delete </button>
+    </form>
 <% }) %>
+</div>

@@ -1,6 +1,12 @@
-<h2> New User </h2>
-<form action = "/users" method = "POST">
-    <%- include('_form_fields') %>
-    <a href="/users">Cancel</a>
-    <button type="submit">Create</button>
-</form>
+<h1>Register New User</h1>
+
+<div class="login-form">
+    <form action="/users" method="POST">
+        <input type="text" name="name" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <a href="/users">Cancel</a>
+        <button type="submit">Submit</button>
+    </form>
+    <br/>
+    <a href='/login'>Already signed up? Login here!</a>
+</div>

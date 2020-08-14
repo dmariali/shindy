@@ -3,61 +3,113 @@
   height: 95%;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 25% 25% 25% 25%;
-      grid-template-columns: 25% 25% 25% 25%;
+  -ms-grid-columns: 75% 25%;
+      grid-template-columns: 75% 25%;
   -ms-grid-rows: 75% 25%;
       grid-template-rows: 75% 25%;
-      grid-template-areas: "game game game chat" "game game game chat" "video video video chat";
+      grid-template-areas: "game chat" "video chat";
 }
 
 section#game-area {
   -ms-grid-row: 1;
-  -ms-grid-row-span: 2;
   -ms-grid-column: 1;
-  -ms-grid-column-span: 3;
   grid-area: game;
   background-color: pink;
 }
 
 section#video-area {
-  -ms-grid-row: 3;
+  -ms-grid-row: 2;
   -ms-grid-column: 1;
-  -ms-grid-column-span: 3;
   grid-area: video;
-  background-color: white;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (150px)[auto-fill];
-      grid-template-columns: repeat(auto-fill, 150px);
-  grid-gap: 10px;
-  -ms-grid-rows: 150px;
-      grid-template-rows: 150px;
+  background-color: green;
 }
 
 section#chat-area {
   -ms-grid-row: 1;
-  -ms-grid-row-span: 3;
-  -ms-grid-column: 4;
+  -ms-grid-row-span: 2;
+  -ms-grid-column: 2;
   grid-area: chat;
   background-color: grey;
 }
 
+#footer {
+  margin: 0 auto;
+  width: 300px;
+}
+
+header {
+  background-color: lightyellow;
+  color: #183850;
+  text-align: left;
+  padding: 20px;
+}
+
+h1 {
+  background-color: lightyellow;
+  color: #183850;
+  text-align: left;
+  padding: 20px;
+  text-transform: uppercase;
+  margin: 0px;
+}
+
+#shindy {
+  color: #183850;
+  font-size: 2em;
+  text-decoration: none;
+}
+
+/* Navigation container */
+#topnav {
+  overflow: hidden;
+  background-color: #333;
+  width: 75%;
+  float: right;
+}
+
+/* Navbar links */
+#topnav a {
+  float: right;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Links - change color on hover */
+#topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Make logout button look like the rest of links */
+#logout_button {
+  border: none;
+  background-color: #333;
+  color: #f2f2f2;
+  float: right;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  font-size: 1em;
+}
+
+#logout_button:hover {
+  background-color: #ddd;
+  color: black;
+}
+
 /* STYLE */
+html {
+  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+}
+
 body {
   padding: 0;
   margin: 0;
   height: 100%;
   background-color: white;
-}
-
-header {
-  text-align: center;
-  color: #183850;
-}
-
-h1 {
-  font-family: 'Comfortaa', sans-serif;
-  margin: 0px;
 }
 
 section#chatroom {
@@ -96,15 +148,10 @@ section#chat_input_zone {
   transform: translateY(-50%);
 }
 
-input#username {
-  font-family: 'Comfortaa', sans-serif;
-}
-
 input#message {
   display: inline-block;
   width: 88%;
   height: 70%;
-  font-family: 'Comfortaa', sans-serif;
   font-size: 2vh;
 }
 
@@ -119,7 +166,6 @@ button#send_message {
   height: 2vh;
   line-height: 2vh;
   font-size: 1em;
-  font-family: 'Comfortaa', sans-serif;
 }
 
 .message:nth-child(even) {
