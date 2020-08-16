@@ -35,9 +35,11 @@ db.once('open', () => console.error("Connected to Mongoose"))
 
 //connect router files
 const userRouter = require("./routes/users")
+const indexRouter = require("./routes/index")
 
 //NOT IDEAL - need to connect to database
 const users = []
+const User = require('./models/user')
 
 const initializePassport = require ('./passport_config.js')
 initializePassport(
@@ -71,12 +73,10 @@ app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({limit:'10mb', extended: false}))
 
 //------ HANDLE ROUTING -------
-app.get('/',  (req, res) => {
-  res.render('index.ejs', {logged_in: req.isAuthenticated()})
-})
 
 // got to UserRouter for anything with subdomain /users
 app.use('/users', userRouter)
+app.use('/', indexRouter)
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
   res.render('login.ejs')

@@ -15,14 +15,15 @@ body {
     background-color: $bgcolor;
 }
 
-section#chatroom {
-    margin: auto;
-    padding: 0 20px 0 0;
-    list-style: none;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
+// section#chatroom {
+//     margin: auto;
+//     padding: 0 20px 0 0;
+//     list-style: none;
+//     overflow-y: scroll;
+//     overflow-x: hidden;
+// }
 
+// text inside the chat area
 section#chatroom p {
     position: relative;
     clear: both;
@@ -33,15 +34,15 @@ section#chatroom p {
     border-radius: 10px;
 }
 
+// the message that user types in
 section#chat_input_zone {
     height: 5%;
     text-align: center;
     bottom: 0;
     margin: auto;
-    width: 100%;
+    width: 25%;
     position: fixed;
-    background: map-get($colors, chat-bg);
-    border: 5px outset map-get($colors, chat-bg);
+    background: white;
 }
 
 .vertical-align {

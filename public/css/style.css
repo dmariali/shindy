@@ -1,6 +1,6 @@
 .content-container {
   width: 100%;
-  height: 95%;
+  height: 90%;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 75% 25%;
@@ -8,6 +8,7 @@
   -ms-grid-rows: 75% 25%;
       grid-template-rows: 75% 25%;
       grid-template-areas: "game chat" "video chat";
+  overflow: hidden;
 }
 
 section#game-area {
@@ -22,6 +23,14 @@ section#video-area {
   -ms-grid-column: 1;
   grid-area: video;
   background-color: green;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (23vh)[auto-fill];
+      grid-template-columns: repeat(auto-fill, 23vh);
+  grid-gap: 10px;
+  -ms-grid-rows: 23vh;
+      grid-template-rows: 23vh;
+  overflow: hidden;
 }
 
 section#chat-area {
@@ -30,11 +39,8 @@ section#chat-area {
   -ms-grid-column: 2;
   grid-area: chat;
   background-color: grey;
-}
-
-#footer {
-  margin: 0 auto;
-  width: 300px;
+  overflow-y: scroll;
+  height: 95%;
 }
 
 header {
@@ -42,6 +48,7 @@ header {
   color: #183850;
   text-align: left;
   padding: 20px;
+  height: 5%;
 }
 
 h1 {
@@ -112,14 +119,6 @@ body {
   background-color: white;
 }
 
-section#chatroom {
-  margin: auto;
-  padding: 0 20px 0 0;
-  list-style: none;
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
-
 section#chatroom p {
   position: relative;
   clear: both;
@@ -135,10 +134,9 @@ section#chat_input_zone {
   text-align: center;
   bottom: 0;
   margin: auto;
-  width: 100%;
+  width: 25%;
   position: fixed;
-  background: grey;
-  border: 5px outset grey;
+  background: white;
 }
 
 .vertical-align {
