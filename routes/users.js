@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
+//for encrypting the password
+const bcrypt = require ('bcrypt')
 
 // All users Route
 router.get('/', async (req, res) => {
@@ -22,9 +24,14 @@ router.get('/new', (req, res) => {
 // Create new User - use POST for creation, and PUT for updating with REST
 // info is from form in users/new.ejs 
 router.post('/', async (req, res) => {
+    const hashedPassword = await bcrypt.hash (req.body.password, 10) 
+
     const user = new User ({
+        username: req.body.username,
+        email: req.body.email,
         name: req.body.name, 
-        password: req.body.password
+        password: hashedPassword,
+        verified: false
     })
     try {
         const newUser = await user.save()
@@ -96,5 +103,13 @@ router.delete('/:id', async (req, res)=> {
         
     }
 })
+
+// if user already authenticated don't take them to the new user or login pages
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return res.redirect('/')
+    }
+    next()
+  }
 
 module.exports = router
