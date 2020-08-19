@@ -1,11 +1,16 @@
 <header>
     <a id="shindy" href="/">Shindy</a>
-    <nav id="topnav">     
-        <a href="/login">Login</a>
-        <form action="/logout?_method=DELETE" method=POST>
-            <button id="logout_button" type="submit">LogOut</button>
-        </form>
-        <a href = "/users">Users</a>
-        <a href = "/users/new">New User</a>        
+    <nav id="topnav"> 
+        <% if (logged_in) { %>   
+            <form action="/logout?_method=DELETE" method=POST>
+                <button id="logout_button" type="submit">Log Out</button>
+            </form>
+            <a href = "/users/<%= user.id%>">View Profile</a>
+            <a href = "/users">All Users</a>
+            <p style="color:white">Welcome, <%= user.name %></p>               
+        <% } else { %>
+            <a href="/login">Login</a>
+            <a href = "/users/new">New User</a>  
+        <% } %>
     </nav>   
 </header>

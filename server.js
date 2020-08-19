@@ -33,6 +33,8 @@ db.once('open', () => console.error("Connected to Mongoose"))
 const userRouter = require("./routes/users")
 const indexRouter = require("./routes/index")
 
+
+
 const User = require('./models/user')
 
 //set up how we will access our views - using ejs which we installed

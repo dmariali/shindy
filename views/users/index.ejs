@@ -3,8 +3,8 @@
 <div id="user_list">
 <% users.forEach(user => { %>
     <div><%= user.name %></div>
-    <a href="users/<%= user.id %>">View</a>
-    <a href="users/<%= user.id %>/edit">Edit</a>
+    <a href="/users/<%= user.id %>">View</a>
+    <a href="/users/<%= user.id %>/edit">Edit</a>
 
     <!-- need to use a form here and not just a link to delete because when google is 
     scraping your site it will select all the links and if it is a link it will
