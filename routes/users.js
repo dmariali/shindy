@@ -3,13 +3,18 @@ const router = express.Router()
 const User = require('../models/user')
 //for encrypting the password
 const bcrypt = require ('bcrypt')
+// handle authentication   
+const passport = require ('passport') 
+
+router.use(passport.initialize())
+router.use(passport.session())
 
 // All users Route
-router.get('/', async (req, res) => {
+router.get('/', checkAuthenticated, async (req, res) => {
     try {
         // passing an empty object into find() says that we have no conditions
         const users = await User.find({})
-        res.render('users/index', {users: users})
+        res.render('users/index', {users: users, logged_in: true, user: req.user})
 
     } catch {
         res.redirect('/')
@@ -17,8 +22,8 @@ router.get('/', async (req, res) => {
 })
 
 //New User Route -- this needs to be ABOVE /:id else it will never get to this
-router.get('/new', (req, res) => {
-    res.render('users/new', {user : new User()})
+router.get('/new', checkNotAuthenticated, (req, res) => {
+    res.render('users/new', {user : new User(), logged_in: false})
 })
 
 // Create new User - use POST for creation, and PUT for updating with REST
@@ -35,10 +40,11 @@ router.post('/', async (req, res) => {
     })
     try {
         const newUser = await user.save()
-        res.redirect(`users/${newUser.id}`)
+        res.redirect(`/users/${newUser.id}`)
     } catch {
         res.render('users/new', {
             user: user,
+            logged_in: false,
             errorMessage: "Error creating user"
         })
     }
@@ -59,6 +65,7 @@ router.put('/:id', async (req, res) => {
         } else {
             res.render('users/edit', {
                 user: user,
+                logged_in: true,
                 errorMessage: "Error updating user"
             })
         }
@@ -66,12 +73,14 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.get('/:id', async (req, res) => {
+// show user profile
+router.get('/:id', checkAuthenticated, async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
         res.render('users/show', {
             user: user,
-            gamesPlayed: ["GameOne", "GameTwo", "GameThree"]
+            logged_in: true,
+            gamesPlayed: ["GameOne", "GameTwo", "GameThree"],
         })
     } catch {
         res.redirect('/')
@@ -79,10 +88,10 @@ router.get('/:id', async (req, res) => {
 })
 
 //edit user
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', checkAuthenticated, async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
-        res.render('users/edit', {user: user})
+        res.render('users/edit', {user: user, logged_in: true})
     } catch {
         res.redirect('/users')
     }
@@ -98,16 +107,24 @@ router.delete('/:id', async (req, res)=> {
         if (user === null) {
             res.redirect('/')
         } else {
-            res.redirect(`/authors/${author.id}`)
+            res.redirect(`/users/${user.id}`)
         }
         
     }
 })
 
+// if the user is not authenticated, take them to the login page
+function checkAuthenticated (req, res, next) {
+    if (req.isAuthenticated()) {
+      return next()
+    }
+    res.redirect('/login')
+  }
+
 // if user already authenticated don't take them to the new user or login pages
 function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-      return res.redirect('/')
+      return res.redirect('/users/show')
     }
     next()
   }

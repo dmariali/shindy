@@ -9,8 +9,10 @@ const bcrypt = require ('bcrypt')
 
 const User = require('../models/user')
 
-router.get('/', (req, res) => {
-  res.render('index.ejs', {logged_in: req.isAuthenticated()})
+var current_user = {id: 0, name: ""}
+
+router.get('/',  (req, res) => {
+  res.render('index.ejs', {logged_in: current_user.id !== 0, user: current_user})
 })
 
 // LOGIN AUTHENTICATION
@@ -29,6 +31,7 @@ passport.use(new LocalStrategy(
         if (!bcrypt.compare(password, user.password)) {
             return done(null, false, { message: 'Incorrect password.' });
         }
+        current_user = user
         return done(null, user);
       })
   }
@@ -48,18 +51,19 @@ router.post ('/login', checkNotAuthenticated, passport.authenticate('local', {
 }))
 
 router.get('/login', checkNotAuthenticated, (req, res) => {
-  res.render('login.ejs')
+  res.render('login.ejs', {logged_in: false, user: {id:0, name:""}})
 })
 
 // dynamically assign the roomid to the uuid that's generated
 // user cannot access a room unless authenticated
 router.get('/:room', checkAuthenticated, (req, res) => {
-  res.render('room.ejs', {roomId: req.params.room})
+  res.render('room.ejs', {roomId: req.params.room, logged_in: true, user: req.user})
 })
 
 // add logout functionality
 router.delete('/logout', (req, res)=> {
   req.logOut()
+  current_user = {id: 0, name: ""}
   res.redirect('/login')
 })
 
