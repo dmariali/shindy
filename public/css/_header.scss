@@ -1,13 +1,13 @@
 header {
-    background-color: map-get($colors, header-bg);
-    color: map-get($colors, header-text);
+    background-color: $header-bg;
+    color: $header-text;
     text-align: left;
     padding: 20px;
     height: 5%;
 }
 h1 {
-    background-color: map-get($colors, header-bg);
-    color: map-get($colors, header-text);
+    background-color: $header-bg;
+    color: $header-text;
     text-align: left;
     padding: 20px; 
     text-transform: uppercase;
@@ -15,7 +15,7 @@ h1 {
 }
 
 #shindy {
-    color: map-get($colors, header-text);
+    color: $header-text;
     font-size: 2em;
     text-decoration: none;
 }
@@ -23,7 +23,7 @@ h1 {
 /* Navigation container */ 
 #topnav {
     overflow: hidden;
-    background-color: #333;
+    background-color: $nav-bg;
     width: 75%;
     float: right;
 }  
@@ -31,7 +31,7 @@ h1 {
 #topnav a {
     float: right;
     display: block;
-    color: #f2f2f2;
+    color: $bgcolor;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -39,7 +39,7 @@ h1 {
 
 /* Links - change color on hover */
 #topnav a:hover {
-    background-color: #ddd;
+    background-color: $bgcolor;
     color: black;
 }
 

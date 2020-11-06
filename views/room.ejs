@@ -1,12 +1,14 @@
 <script>
-  const ROOM_ID = "<%= roomId %>"
+  var ROOM_ID = '<%- JSON.stringify(roomID) %>'
+  var USER = '<%- JSON.stringify(user) %>'
 </script>
 
   <div class="content-container">
     
     <!-- Area where game will show -->
     <section id = "game-area">
-      <h2> GAME HERE</h2>
+      <p> Game goes here </p>
+   
     </section>
 
     <!-- Area where video will show -->
@@ -14,13 +16,20 @@
     
     <!-- area for text chat -->
     <section id= "chat-area">
-      <section id="chatroom"> </section> 
+      <!-- Area where messages are displayed -->
+      <div id="scroller">
+        <!-- append content here -->
+        <section id="chatroom"> </section> 
+        <div id="anchor"></div>
+    </div>
+      <!-- Space where messages are typed -->
       <section id="chat_input_zone"> 
-        <input id="message" class="vertical-align" type="text" />
+        <input id="message" class="vertical-align" placeholder= "Say Something..." type="text" />
         <button id="send_message" class="vertical-align" type="button">Send</button>
       </section>
   </section>
-  </div>
+  </div>   
+       
 </div>      
 
   <script defer src="https://code.jquery.com/jquery-latest.min.js"></script>

@@ -10,7 +10,6 @@ const expressLayouts = require('express-ejs-layouts')
 // use the environment port (for heroku deployment) or 3000 if used locally
 const PORT = process.env.PORT || 3000
 
-
 // show flash messages
 const flash = require ('express-flash')
 const session = require ('express-session')
@@ -27,13 +26,11 @@ mongoose.connect(process.env.DATABASE_URL, {
 })
 const db = mongoose.connection 
 db.on('error', error => console.error(error))
-db.once('open', () => console.error("Connected to Mongoose"))
+db.once('open', () => console.log("Connected to Mongoose"))
 
 //connect router files
 const userRouter = require("./routes/users")
 const indexRouter = require("./routes/index")
-
-
 
 const User = require('./models/user')
 
@@ -88,6 +85,8 @@ io.on('connection', socket => {
       socket.join(roomId)
       socket.to(roomId).broadcast.emit('user_connected', userId)
 
+      console.log("join room here", userId, "and ", roomId)
+
       socket.on('disconnect', () => {
         socket.to(roomId).broadcast.emit('user_disconnected', userId)
       })
@@ -96,6 +95,6 @@ io.on('connection', socket => {
     //listen on new_chat_message
     socket.on('new_chat_message', (data) => {
         //emit the new message
-        io.sockets.emit('new_chat_message', {message:data.message, username: socket.username})
+        io.sockets.emit('new_chat_message', {message:data.message, name: data.user})
     })  
 })

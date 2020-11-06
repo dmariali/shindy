@@ -15,14 +15,14 @@ section#game-area {
   -ms-grid-row: 1;
   -ms-grid-column: 1;
   grid-area: game;
-  background-color: pink;
+  background-color: #D81159;
 }
 
 section#video-area {
   -ms-grid-row: 2;
   -ms-grid-column: 1;
   grid-area: video;
-  background-color: green;
+  background-color: #006BA6;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (23vh)[auto-fill];
@@ -38,22 +38,22 @@ section#chat-area {
   -ms-grid-row-span: 2;
   -ms-grid-column: 2;
   grid-area: chat;
-  background-color: grey;
+  background-color: white;
   overflow-y: scroll;
   height: 95%;
 }
 
 header {
-  background-color: lightyellow;
-  color: #183850;
+  background-color: #8F2D56;
+  color: #0496FF;
   text-align: left;
   padding: 20px;
   height: 5%;
 }
 
 h1 {
-  background-color: lightyellow;
-  color: #183850;
+  background-color: #8F2D56;
+  color: #0496FF;
   text-align: left;
   padding: 20px;
   text-transform: uppercase;
@@ -61,7 +61,7 @@ h1 {
 }
 
 #shindy {
-  color: #183850;
+  color: #0496FF;
   font-size: 2em;
   text-decoration: none;
 }
@@ -69,7 +69,7 @@ h1 {
 /* Navigation container */
 #topnav {
   overflow: hidden;
-  background-color: #333;
+  background-color: grey;
   width: 75%;
   float: right;
 }
@@ -78,7 +78,7 @@ h1 {
 #topnav a {
   float: right;
   display: block;
-  color: #f2f2f2;
+  color: white;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -86,7 +86,7 @@ h1 {
 
 /* Links - change color on hover */
 #topnav a:hover {
-  background-color: #ddd;
+  background-color: white;
   color: black;
 }
 
@@ -106,6 +106,71 @@ h1 {
   color: black;
 }
 
+section#chatroom {
+  margin: auto;
+  list-style: none;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+section#chat_input_zone {
+  height: 5%;
+  bottom: 0;
+  margin: auto;
+  width: 25%;
+  position: fixed;
+  background: white;
+}
+
+input#message {
+  display: inline-block;
+  width: 95%;
+  height: 90%;
+  font-size: 1.5vh;
+  border: 2px solid lightgrey;
+}
+
+section#chatroom p {
+  padding: 0.5em;
+  width: 75%;
+  -webkit-box-shadow: 0 0 2rem rgba(0, 0, 0, 0.075), 0rem 1rem 1rem -1rem rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0 2rem rgba(0, 0, 0, 0.075), 0rem 1rem 1rem -1rem rgba(0, 0, 0, 0.1);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0.5rem 1rem;
+  min-height: 2.25rem;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: 66%;
+}
+
+.myMessage {
+  margin: 0.5rem 1rem 0.5rem auto;
+  border-radius: 1.125rem 1.125rem 0 1.125rem;
+  background: #333;
+  color: white;
+}
+
+.otherMessage {
+  margin: 0.5rem;
+  border-radius: 1.125rem 1.125rem 1.125rem 0;
+  background-color: #d3d3d3;
+  background: #FFF;
+}
+
+#scroller * {
+  /* don't allow the children of the scrollable element to be selected as an anchor node */
+  overflow-anchor: none;
+}
+
+#anchor {
+  /* allow the final child to be selected as an anchor node */
+  overflow-anchor: auto;
+  /* anchor nodes are required to have non-zero area */
+  height: 1px;
+}
+
 /* STYLE */
 html {
   font-family: Arial, Helvetica, sans-serif;
@@ -119,68 +184,13 @@ body {
   background-color: white;
 }
 
-section#chatroom p {
-  position: relative;
-  clear: both;
-  display: inline-block;
-  padding: 16px 20px 16px 20px;
-  margin: auto;
-  font: 16px/20px 'Noto Sans', sans-serif;
-  border-radius: 10px;
-}
-
-section#chat_input_zone {
-  height: 5%;
-  text-align: center;
-  bottom: 0;
-  margin: auto;
-  width: 25%;
-  position: fixed;
-  background: white;
-}
-
-.vertical-align {
-  position: relative;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
-input#message {
-  display: inline-block;
-  width: 88%;
-  height: 70%;
-  font-size: 2vh;
-}
-
-button#send_message {
-  display: inline-block;
-  height: 70%;
-  width: 10%;
-}
-
-.message {
-  width: 75%;
-  height: 2vh;
-  line-height: 2vh;
-  font-size: 1em;
-}
-
-.message:nth-child(even) {
-  background-color: #151735;
-  color: white;
-}
-
-.message:nth-child(odd) {
-  background-color: #224b6b;
-}
-
 /* adding video functionality */
 video {
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   -o-object-fit: cover;
      object-fit: cover;
+  padding: 5%;
 }
 
 /* login and register forms */

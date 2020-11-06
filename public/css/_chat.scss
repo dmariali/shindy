@@ -1,0 +1,62 @@
+section#chatroom {
+    margin: auto;
+    list-style: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+// background of area where you type your message
+section#chat_input_zone {
+    height: 5%;
+    bottom: 0;
+    margin: auto;
+    width: 25%;
+    position: fixed;
+    background: white;
+}
+
+// area where user types the message in 
+input#message {
+    display: inline-block;
+    width: 95%;
+    height: 90%;
+    font-size: 1.5vh;
+    border: 2px solid lightgrey;
+}
+
+// chat messages
+section#chatroom p {  
+    padding: 0.5em;
+    width: 75%;
+    box-shadow: 0 0 2rem rgba(black, 0.075), 0rem 1rem 1rem -1rem rgba(black, 0.1);
+    box-sizing: border-box;
+    padding: 0.5rem 1rem;
+    
+    min-height: 2.25rem;
+    width: fit-content;
+    max-width: 66%;
+}
+.myMessage{
+    margin: 0.5rem 1rem 0.5rem auto ;
+    border-radius: 1.125rem 1.125rem 0 1.125rem;
+    background: #333;
+    color: white;
+}
+.otherMessage {
+    margin: 0.5rem;
+    border-radius: 1.125rem 1.125rem 1.125rem 0;
+    background-color: $other-message;
+    background: #FFF;
+}
+
+// Add auto scroll to chatroom - only works in Chromium browsers or Firefox
+#scroller * {
+    /* don't allow the children of the scrollable element to be selected as an anchor node */
+    overflow-anchor: none;
+}
+#anchor {
+    /* allow the final child to be selected as an anchor node */
+    overflow-anchor: auto;
+    /* anchor nodes are required to have non-zero area */
+    height: 1px;
+}

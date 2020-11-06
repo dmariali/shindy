@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+// access User database
 const User = require('../models/user')
 //for encrypting the password
 const bcrypt = require ('bcrypt')

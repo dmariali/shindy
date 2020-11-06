@@ -12,12 +12,12 @@
 
 section#game-area {
     grid-area: game;
-    background-color: map-get($colors, game-bg);
+    background-color: $game-bg;
 }
 
 section#video-area {
     grid-area:video;
-    background-color: map-get($colors, video-bg);   
+    background-color: $video-bg;   
     display: grid;
     grid-template-columns: repeat(auto-fill, 23vh);
     grid-gap: 10px; 
@@ -27,7 +27,7 @@ section#video-area {
 
 section#chat-area{
     grid-area:chat;
-    background-color: map-get($colors, chat-bg);
+    background-color: $chat-bg;
     overflow-y: scroll;
     height: 95%;
 }

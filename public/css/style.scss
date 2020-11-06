@@ -2,6 +2,7 @@
 @import 'colors'; 
 @import 'layout';
 @import 'header';
+@import 'chat';
 
 /* STYLE */
 html {
@@ -15,78 +16,14 @@ body {
     background-color: $bgcolor;
 }
 
-// section#chatroom {
-//     margin: auto;
-//     padding: 0 20px 0 0;
-//     list-style: none;
-//     overflow-y: scroll;
-//     overflow-x: hidden;
-// }
 
-// text inside the chat area
-section#chatroom p {
-    position: relative;
-    clear: both;
-    display: inline-block;
-    padding: 16px 20px 16px 20px;
-    margin: auto;
-    font: 16px/20px 'Noto Sans', sans-serif;
-    border-radius: 10px;
-}
-
-// the message that user types in
-section#chat_input_zone {
-    height: 5%;
-    text-align: center;
-    bottom: 0;
-    margin: auto;
-    width: 25%;
-    position: fixed;
-    background: white;
-}
-
-.vertical-align {
-    position: relative;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-}
-
-input#message {
-    display: inline-block;
-    width: 88%;
-    height: 70%;
-    font-size: 2vh;
-}
-
-button#send_message {
-    display: inline-block;
-    height: 70%;
-    width: 10%;
-}
-
-.message {
-    width: 75%;
-    height: 2vh;
-    line-height: 2vh;
-    font-size: 1em;
-}
-
-.message:nth-child(even) {
-    background-color: #151735;
-    color: white;
-}
-
-.message:nth-child(odd) {
-    background-color: #224b6b
-}
 
 /* adding video functionality */   
 video {
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 90%;
     object-fit: cover;
+    padding: 5%;
 }
 
 /* login and register forms */

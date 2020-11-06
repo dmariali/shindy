@@ -57,7 +57,7 @@ router.get('/login', checkNotAuthenticated, (req, res) => {
 // dynamically assign the roomid to the uuid that's generated
 // user cannot access a room unless authenticated
 router.get('/:room', checkAuthenticated, (req, res) => {
-  res.render('room.ejs', {roomId: req.params.room, logged_in: true, user: req.user})
+  res.render('room.ejs', {roomID: req.params.room, logged_in: true, user: req.user})
 })
 
 // add logout functionality
