@@ -85,7 +85,7 @@ $(function(){
     }); 
     
     function connectToNewUser (userId, stream) {
-      const call = myPeer.call(userId, stream)
+      const call = myPeer.connect(userId, stream)
       const video = document.createElement('video')
       console.log("showing video")
 

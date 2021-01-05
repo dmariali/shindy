@@ -2,8 +2,10 @@ const express = require('express')
 const router = express.Router()
 // handle authentication   
 const passport = require ('passport') 
-//use to generate random uuid for room ids
+//use to generate random uuid for room url
 const {v4: uuidV4} = require ('uuid')
+// use to generate random 5 digit ID for room
+const randomize = require ('randomatic')
 const LocalStrategy = require ('passport-local').Strategy
 const bcrypt = require ('bcrypt')
 
@@ -57,7 +59,7 @@ router.get('/login', checkNotAuthenticated, (req, res) => {
 // dynamically assign the roomid to the uuid that's generated
 // user cannot access a room unless authenticated
 router.get('/:room', checkAuthenticated, (req, res) => {
-  res.render('room.ejs', {roomID: req.params.room, logged_in: true, user: req.user})
+  res.render('room.ejs', {roomUUID: req.params.room, roomID: randomize('AAAAA'), logged_in: true, user: req.user})
 })
 
 // add logout functionality

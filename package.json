@@ -32,6 +32,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "peer": "^0.5.3",
+    "randomatic": "^3.1.1",
     "socketio": "^1.0.0",
     "uuid": "^8.3.0"
   },

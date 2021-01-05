@@ -65,14 +65,14 @@ app.use('/', indexRouter)
 
 //------------ CONFIGURING SOCKET.IO ----------------
 
-var http = require('http').createServer(app)
+const server = require('http').Server(app)
 // Listen on whatever the defined port is (not only 3000)
-http.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`listening on ${PORT}`)
 })
 
 //socket.io instantiation
-const io = require("socket.io")(http)
+const io = require("socket.io")(server)
 
 //listen on every connection 
 io.on('connection', socket => {
