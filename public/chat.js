@@ -14,14 +14,16 @@ $(function(){
     const myPeer = new Peer ()
 
     myPeer.on('open', id => {
-      room = JSON.parse(ROOM_ID)
+      var room = JSON.parse(ROOM_ID)
       socket.emit('join_room', room, id)       
     })
 
     // Emit message
     send_message.click(function() {
         var name = JSON.parse(USER).name
-        socket.emit('new_chat_message', {message:message.val(), user: name, roomId: ROOM_ID})
+        var room = JSON.parse(ROOM_ID)
+        console.log("Room in chat.js: ", room, ROOM_ID)
+        socket.emit('new_chat_message', {message:message.val(), user: name}, room)
         message.val('')
     })
 
@@ -34,7 +36,7 @@ $(function(){
     //Listen on new_chat_message
     socket.on('new_chat_message', (data) => {
       var current_user = JSON.parse(USER).name     
-
+      
       // change formatting based on who sent the message
       if (current_user === data.name) {
           // show the message in the chatroom area
@@ -46,7 +48,7 @@ $(function(){
     })
 
     socket.on('user_connected', userId => {
-      chatroom.append("<p class='chat_message myMessage'>" + data.name + "has joined the chat </p>")
+      chatroom.append("<p class='chat_message myMessage'>" + userId + "has joined the chat </p>")
     })
 
     // remove other user video when they disconnect
