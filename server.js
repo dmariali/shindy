@@ -76,8 +76,7 @@ const io = require("socket.io")(server)
 
 //listen on every connection 
 io.on('connection', socket => {
-    let activeSockets = []
-
+    
     //default username
     socket.username = "Anonymous"
 
@@ -85,16 +84,14 @@ io.on('connection', socket => {
       socket.join(roomId)
       socket.to(roomId).broadcast.emit('user_connected', userId)
 
-      console.log("join room here", userId, "and ", roomId)
-
       socket.on('disconnect', () => {
         socket.to(roomId).broadcast.emit('user_disconnected', userId)
       })
     })    
 
     //listen on new_chat_message
-    socket.on('new_chat_message', (data) => {
+    socket.on('new_chat_message', (data, roomId) => {
         //emit the new message
-        io.sockets.emit('new_chat_message', {message:data.message, name: data.user})
+        io.to(roomId).emit('new_chat_message', {message:data.message, name: data.user})
     })  
 })

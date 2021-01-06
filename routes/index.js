@@ -47,7 +47,7 @@ passport.use(new LocalStrategy(
   })
 
 router.post ('/login', checkNotAuthenticated, passport.authenticate('local', {
-  successRedirect : `/${uuidV4()}`,
+  successRedirect : `/${randomize('AAAAA')}`,
   failureRedirect: '/login', 
   failureFlash: "Sorry, authentication failed, please try again"
 }))
@@ -59,7 +59,9 @@ router.get('/login', checkNotAuthenticated, (req, res) => {
 // dynamically assign the roomid to the uuid that's generated
 // user cannot access a room unless authenticated
 router.get('/:room', checkAuthenticated, (req, res) => {
-  res.render('room.ejs', {roomUUID: req.params.room, roomID: randomize('AAAAA'), logged_in: true, user: req.user})
+  res.render('room.ejs', {roomID: req.params.room, logged_in: true, user: req.user})
+  console.log("Render room.ejs" , req.params.room )
+
 })
 
 // add logout functionality
