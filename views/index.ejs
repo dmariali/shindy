@@ -1,13 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=\, initial-scale=1.0">
-    <title>HomePage</title>
-</head>
-<body>
-    <p>Welcome to shindy homepage</p>
+<div class="general-form">
+    <form action="/create-room" method="POST">
+        <input type="submit" value = "Create Room">
+    </form>
 
-    
-</body>
-</html>
+    <br>
+    <br>
+
+    <form action="/join-room" method="POST"> 
+        <label for="room"> Join Room </label>
+        <input type="text" name="room" placeholder="Room ID"/>
+        <input type="submit" value= "Enter">
+    </form>
+</div>
