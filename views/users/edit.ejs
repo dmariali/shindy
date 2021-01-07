@@ -2,7 +2,7 @@
     <h1> UPDATE USER INFO</h1>
 </header>
 
-<div class="login-form">
+<div class="general-form">
     <form method="POST" action="/users/<%= user.id %>?_method=PUT" >
         <label> Name </label>
         <input type="text" name="name" value = <%= user.name %>>

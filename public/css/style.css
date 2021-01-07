@@ -193,23 +193,23 @@ video {
   padding: 5%;
 }
 
-/* login and register forms */
-.login-form {
+/* styling for all forms */
+.general-form {
   width: 300px;
   margin: 0 auto;
   font-family: Tahoma, Geneva, sans-serif;
 }
 
-.login-form h1 {
+.general-form h1 {
   text-align: center;
   color: #4d4d4d;
   font-size: 24px;
   padding: 20px 0 20px 0;
 }
 
-.login-form input[type="password"],
-.login-form input[type="email"],
-.login-form input[type="text"] {
+.general-form input[type="password"],
+.general-form input[type="email"],
+.general-form input[type="text"] {
   width: 100%;
   padding: 15px;
   border: 1px solid #dddddd;
@@ -218,7 +218,7 @@ video {
           box-sizing: border-box;
 }
 
-.login-form input[type="submit"] {
+.general-form input[type="submit"] {
   width: 100%;
   padding: 15px;
   background-color: #535b63;

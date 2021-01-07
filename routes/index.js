@@ -13,7 +13,7 @@ const User = require('../models/user')
 
 var current_user = {id: 0, name: ""}
 
-router.get('/',  (req, res) => {
+router.get('/', (req, res) => {
   res.render('index.ejs', {logged_in: current_user.id !== 0, user: current_user})
 })
 
@@ -47,7 +47,7 @@ passport.use(new LocalStrategy(
   })
 
 router.post ('/login', checkNotAuthenticated, passport.authenticate('local', {
-  successRedirect : `/${randomize('AAAAA')}`,
+  successRedirect : `/`,
   failureRedirect: '/login', 
   failureFlash: "Sorry, authentication failed, please try again"
 }))
@@ -56,12 +56,21 @@ router.get('/login', checkNotAuthenticated, (req, res) => {
   res.render('login.ejs', {logged_in: false, user: {id:0, name:""}})
 })
 
+//Create a new room - generate a random 5 letter room code
+router.post ('/create-room', checkAuthenticated, (req, res) => {
+  res.redirect(`/${randomize("AAAAA")}`)
+})
+
+// when user enters the 5 letter code for a room they can enter 
+// and communicate with others in the same room
+router.post ('/join-room', checkAuthenticated, (req, res) => {  
+  res.redirect(`/${req.body.room}`)
+})
+
 // dynamically assign the roomid to the uuid that's generated
 // user cannot access a room unless authenticated
 router.get('/:room', checkAuthenticated, (req, res) => {
   res.render('room.ejs', {roomID: req.params.room, logged_in: true, user: req.user})
-  console.log("Render room.ejs" , req.params.room )
-
 })
 
 // add logout functionality
