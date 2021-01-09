@@ -1,0 +1,99 @@
+    
+    <div class="main_game">
+    
+    
+   <!-- <script defer src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script> -->
+
+    <div class="column">
+      <br /><br />
+      <button class="player-score" id="player-x-score">0</button>
+      <br />
+      <h2>Player 1</h2>
+      <div class="player-avatar" id="player-x-avatar"></div>
+      <br />
+      <div>
+        <input
+          class="x"
+          id="player-x-avatar-color-button"
+          class="input"
+          size="7"
+          onchange="update(this.jscolor)"
+          data-jscolor=""
+          value="blue"
+        />
+      </div>
+    </div>
+    <div class="container">
+      <h1>Tic Tac Toe</h1>
+      <br />
+      <div>
+        <span>
+          <input
+            size="6"
+            type="text"
+            id="board-size-input"
+            placeholder="Board:"
+          />
+          <button><span id="board-size-output">3</span></button>
+        </span>
+        &nbsp
+        <span>
+          <input size="6" type="text" id="to-win-input" placeholder="To win:" />
+          <button><span id="to-win-output">3</span></button>
+        </span>
+        <button id="submit-button">Submit</button>
+      </div>
+      <br />
+      <div>
+        <p clas="continue-reset">
+          <button id="continue-btn">Continue</button>
+          <button id="reset-btn">Reset</button>
+        </p>
+      </div>
+      <div><p class="alert"></p></div>
+      <br />
+      <div class="table-container">
+        <table class="table">
+          <tbody>
+            <tr class="x1">
+              <td id="x1 y1"></td>
+              <td id="x1 y2"></td>
+              <td id="x1 y3"></td>
+            </tr>
+            <tr class="x2">
+              <td id="x2 y1"></td>
+              <td id="x2 y2"></td>
+              <td id="x2 y3"></td>
+            </tr>
+            <tr class="x3">
+              <td id="x3 y1"></td>
+              <td id="x3 y2"></td>
+              <td id="x3 y3"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="column">
+      <br /><br />
+      <button class="player-score" id="player-o-score">0</button>
+      <br />
+      <h2>Player 2</h2>
+      <div class="player-avatar" id="player-o-avatar"></div>
+      <br />
+      <div>
+        <input
+          class="o"
+          id="player-o-avatar-color-button"
+          class="input"
+          size="7"
+          onchange="update(this.jscolor)"
+          data-jscolor=""
+          value="green"
+        />
+      </div>
+    </div>
+       <script defer src="https://code.jquery.com/jquery-latest.min.js"></script> 
+       <!-- <script defer src= "tictactoe.js"></script> -->
+
+</div>

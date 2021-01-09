@@ -92,6 +92,16 @@ io.on('connection', socket => {
     //listen on new_chat_message
     socket.on('new_chat_message', (data, roomId) => {
         //emit the new message
+        console.log("Socket ID for new chat message: ", socket.id)
         io.to(roomId).emit('new_chat_message', {message:data.message, name: data.user})
     })  
+
+    //sockets for Game
+    
+    socket.on("TileClick", (roomID) => {
+      console.log("tile click received in server js for roomID: ", roomID,"with socket ID: ", socket.id)
+      socket.to(roomID).broadcast.emit('TileClick')
+    })
+
 })
+

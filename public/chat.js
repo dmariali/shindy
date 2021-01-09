@@ -1,6 +1,16 @@
 $(function(){
+
+    
     //make connection
     const socket = io()
+    socket.on('connect', ()=>{
+      console.log("Socket ID in chat JS: ",socket.id)
+    })
+
+    // var script = document.createElement('script')
+    // script.src = 'tictactoe.js'
+    // script.type = 'text/javascript'
+    // script.defer = true
 
     //buttons and inputs
     var message = $('#message')
@@ -22,7 +32,7 @@ $(function(){
     send_message.click(function() {
         var name = JSON.parse(USER).name
         var room = JSON.parse(ROOM_ID)
-        console.log("Room in chat.js: ", room, ROOM_ID)
+        //console.log("Room in chat.js: ", room, ROOM_ID)
         socket.emit('new_chat_message', {message:message.val(), user: name}, room)
         message.val('')
     })
@@ -37,6 +47,9 @@ $(function(){
     socket.on('new_chat_message', (data) => {
       var current_user = JSON.parse(USER).name     
       
+    socket.on('TileClick',()=>{console.log("Tileclick event received from server in game js")})
+
+
       // change formatting based on who sent the message
       if (current_user === data.name) {
           // show the message in the chatroom area
@@ -60,11 +73,12 @@ $(function(){
     // get local video input
     const myVideo = document.createElement('video')
     myVideo.muted = true
+    var videoState = document.getElementById('video_toggle')
 
     // use this object to keep track of everyone you're connected to
     const peers = {}
 
-    navigator.mediaDevices.getUserMedia({video:true, audio:true})
+    navigator.mediaDevices.getUserMedia({video:videoState.checked, audio:false})
     .then(stream => {
         addVideoStream (myVideo, stream)
         //listen for when new users call you

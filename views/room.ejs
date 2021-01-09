@@ -7,12 +7,17 @@
     
     <!-- Area where game will show -->
     <section id = "game-area">
-      <p> Game goes here </p>
+      <%- include ('partials/tictactoe_board.ejs') %>
    
     </section>
 
     <!-- Area where video will show -->
     <section id="video-area"> </section>
+    <!-- Rectangular switch -->
+    <label class="switch">
+      <input type="checkbox" id="video_toggle">
+      <span class="slider"></span>
+    </label>
     
     <!-- area for text chat -->
     <section id= "chat-area">
@@ -34,3 +39,6 @@
 
   <script defer src="https://code.jquery.com/jquery-latest.min.js"></script>
   <script defer src="chat.js"></script>
+  <script defer src= "tictactoe.js"></script>  
+  <script defer src="test.js"></script>
+  

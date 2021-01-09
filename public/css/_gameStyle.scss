@@ -1,0 +1,64 @@
+
+  
+ 
+  .main_game{
+    display: flex;
+  align-items: top;
+  justify-content: center;
+  text-align: center;
+  background-color: azure;
+  height: 100%;
+  }
+
+  .column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .player-score {
+    font-size: 6%;
+    border: 1px black solid;
+    width: 10%;
+    height: 10%;
+  }
+  
+  .player-avatar {
+    width: 15%;
+    height: 15%;
+    border: 2px black solid;
+  }
+  
+  #player-x-avatar {
+    background-color: blue;
+  }
+  
+  #player-o-avatar {
+    background-color: green;
+  }
+  
+  .column {
+    width: 30%;
+  }
+  
+  .table-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .alert {
+    height: 1rem;
+  }
+  
+  table {
+    height: 25vh;
+    width: 25vw;
+  }
+  
+  td {
+    border: 1px black solid;
+    background-color: rgba(0, 0, 0, 5%);
+  }
