@@ -11,7 +11,11 @@ $(function(){
     // Peer takes 1- ID, put undefined to let the server handle that
     // then { host: 3001 locally or 'your-app-name.herokuapp.com', port is either 9000 or 443(if using https)}
     // if using https include secure: true
-    const myPeer = new Peer ()
+    const myPeer = new Peer (undefined, {
+      secure: true,
+      host: 'shindy-app.herokuapp.com/',
+      port: '443'
+    })
 
     myPeer.on('open', id => {
       var room = JSON.parse(ROOM_ID)
@@ -51,7 +55,7 @@ $(function(){
     })
 
     socket.on('user_connected', userId => {
-      chatroom.append("<p class='chat_message myMessage'>" + userId + "has joined the chat </p>")
+      // chatroom.append("<p class='chat_message myMessage'>" + userId + "has joined the chat </p>")
     })
 
     // remove other user video when they disconnect

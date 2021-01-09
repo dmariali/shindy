@@ -25,11 +25,11 @@ section#video-area {
   background-color: #006BA6;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (23vh)[auto-fill];
-      grid-template-columns: repeat(auto-fill, 23vh);
+  -ms-grid-columns: (20%)[auto-fill];
+      grid-template-columns: repeat(auto-fill, 20%);
   grid-gap: 10px;
-  -ms-grid-rows: 23vh;
-      grid-template-rows: 23vh;
+  -ms-grid-rows: 20%;
+      grid-template-rows: 20%;
   overflow: hidden;
 }
 
@@ -297,6 +297,10 @@ section#chatroom p {
   font-weight: bold;
   height: 36px;
   margin: auto;
+}
+
+.homepage-body {
+  background-color: aqua;
 }
 
 /* STYLE */

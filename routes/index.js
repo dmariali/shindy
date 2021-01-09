@@ -14,7 +14,11 @@ const User = require('../models/user')
 var current_user = {id: 0, name: ""}
 
 router.get('/', (req, res) => {
-  res.render('index.ejs', {logged_in: current_user.id !== 0, user: current_user})
+  if (req.session.passport) {
+    res.render('index-loggedin.ejs', {logged_in: true, user: current_user})
+  } else {
+    res.render('index-loggedout.ejs', {logged_in: false, user: {id: 0, name: ""}})
+  }
 })
 
 // LOGIN AUTHENTICATION
