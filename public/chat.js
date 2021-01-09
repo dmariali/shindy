@@ -15,7 +15,8 @@ $(function(){
 
     myPeer.on('open', id => {
       var room = JSON.parse(ROOM_ID)
-      socket.emit('join_room', room, id)       
+      socket.emit('join_room', room, id)     
+      console.log("Join room request emitted")  
     })
 
     // Emit message
@@ -28,9 +29,11 @@ $(function(){
     })
 
     //send message on press of enter inside the message box
-    message.keypress(function(e){
-      if(e.keyCode==13)
-          send_message.click();
+    message.keypress(function(e){    
+      
+      if(e.keyCode==13){
+          send_message.click()
+      }
     })
 
     //Listen on new_chat_message
@@ -64,7 +67,7 @@ $(function(){
     // use this object to keep track of everyone you're connected to
     const peers = {}
 
-    navigator.mediaDevices.getUserMedia({video:true, audio:true})
+    navigator.mediaDevices.getUserMedia({video:true, audio:false})
     .then(stream => {
         addVideoStream (myVideo, stream)
         //listen for when new users call you
