@@ -23,7 +23,6 @@ $(function(){
     send_message.click(function() {
         var name = JSON.parse(USER).name
         var room = JSON.parse(ROOM_ID)
-        console.log("Room in chat.js: ", room, ROOM_ID)
         socket.emit('new_chat_message', {message:message.val(), user: name}, room)
         message.val('')
     })
@@ -51,49 +50,43 @@ $(function(){
     })
 
     socket.on('user_connected', userId => {
-      chatroom.append("<p class='chat_message myMessage'>" + userId + "has joined the chat </p>")
-    })
-
-    // remove other user video when they disconnect
-    socket.on('user_disconnected', userId => {
-      if (peers[userId]) 
-        peers[userId].close()
+      // chatroom.append("<p class='chat_message myMessage'>" + userId + "has joined the chat </p>")
     })
 
     // get local video input
     const myVideo = document.createElement('video')
     myVideo.muted = true
 
-    // use this object to keep track of everyone you're connected to
-    const peers = {}
-
     navigator.mediaDevices.getUserMedia({video:true, audio:false})
     .then(stream => {
         addVideoStream (myVideo, stream)
-        //listen for when new users call you
+
         myPeer.on('call', call => {
+          // get stream when a new user joins the call
           call.answer(stream)
+
+          // send your stream when a new user joins the call
           const video = document.createElement('video')
           call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream)
           })
-        })
+        } )
+
         //send your video input to other users
         socket.on('user_connected', userId => {
           connectToNewUser(userId, stream)
-        })
-        // stream.getTracks().forEach(track => peerConnection.addTrack(track, stream));
-          
+        })          
     })
     .catch(function(error) {
         console.warn(error.message)
     }); 
     
     function connectToNewUser (userId, stream) {
-      const call = myPeer.connect(userId, stream)
+      const call = myPeer.call(userId, stream)
       const video = document.createElement('video')
-      console.log("showing video")
 
+      // when OTHER user sends back their video stream, we get this
+      // signal 'stream' which takes in THEIR stream
       call.on('stream', userVideoStream => {
         addVideoStream(video, userVideoStream)
       })
@@ -101,16 +94,26 @@ $(function(){
       call.on('close', () => {
         video.remove()
       })
-
-      //link every user id to a call that is made
-      peers[userId] = call
     }
 
     function addVideoStream (video, stream) {
       video.srcObject = stream
       video.addEventListener ('loadedmetadata', () => {
+        // once this stream is loaded onto our page, play the video
         video.play()
       })
-      video_area.append(video)
-    }    
+      const vid_div = document.createElement("div")
+      vid_div.className = "vid_div"
+      vid_div.appendChild(video)
+
+      const video_toggle = document.createElement("div");
+      video_toggle.className = "video_toggle";
+      vid_div.appendChild(video_toggle)
+
+      const audio_toggle = document.createElement("div");
+      audio_toggle.className = "audio_toggle";
+      vid_div.appendChild(audio_toggle)
+
+      video_area.append(vid_div)
+    } 
 })

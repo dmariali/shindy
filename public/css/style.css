@@ -15,21 +15,21 @@ section#game-area {
   -ms-grid-row: 1;
   -ms-grid-column: 1;
   grid-area: game;
-  background-color: #D81159;
+  background-color: #ecebeb;
 }
 
 section#video-area {
   -ms-grid-row: 2;
   -ms-grid-column: 1;
   grid-area: video;
-  background-color: #006BA6;
+  background-color: #26264d;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (23vh)[auto-fill];
-      grid-template-columns: repeat(auto-fill, 23vh);
+  -ms-grid-columns: (270px)[auto-fill];
+      grid-template-columns: repeat(auto-fill, 270px);
   grid-gap: 10px;
-  -ms-grid-rows: 23vh;
-      grid-template-rows: 23vh;
+  -ms-grid-rows: 270px;
+      grid-template-rows: 270px;
   overflow: hidden;
 }
 
@@ -44,16 +44,16 @@ section#chat-area {
 }
 
 header {
-  background-color: #8F2D56;
-  color: #0496FF;
+  background-color: #D81159;
+  color: #26264d;
   text-align: left;
   padding: 20px;
   height: 5%;
 }
 
 h1 {
-  background-color: #8F2D56;
-  color: #0496FF;
+  background-color: #D81159;
+  color: #26264d;
   text-align: left;
   padding: 20px;
   text-transform: uppercase;
@@ -61,7 +61,7 @@ h1 {
 }
 
 #shindy {
-  color: #0496FF;
+  color: #26264d;
   font-size: 2em;
   text-decoration: none;
 }
@@ -69,7 +69,7 @@ h1 {
 /* Navigation container */
 #topnav {
   overflow: hidden;
-  background-color: grey;
+  background-color: transparent;
   width: 75%;
   float: right;
 }
@@ -148,7 +148,7 @@ section#chatroom p {
 .myMessage {
   margin: 0.5rem 1rem 0.5rem auto;
   border-radius: 1.125rem 1.125rem 0 1.125rem;
-  background: #333;
+  background: #26264d;
   color: white;
 }
 
@@ -299,6 +299,10 @@ section#chatroom p {
   margin: auto;
 }
 
+.homepage-body {
+  background-color: aqua;
+}
+
 /* STYLE */
 html {
   font-family: Arial, Helvetica, sans-serif;
@@ -314,11 +318,34 @@ body {
 
 /* adding video functionality */
 video {
-  width: 90%;
-  height: 90%;
+  width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  padding: 5%;
+  border-radius: 25px;
+  padding: 10px;
+}
+
+.vid_div {
+  position: relative;
+  border-radius: 10px;
+}
+
+.video_toggle {
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  width: 25px;
+  height: 25px;
+  background-color: red;
+}
+
+.audio_toggle {
+  position: absolute;
+  top: 25%;
+  left: 15%;
+  width: 25px;
+  height: 25px;
+  background-color: green;
 }
 
 /* styling for all forms */
@@ -349,7 +376,7 @@ video {
 .general-form input[type="submit"] {
   width: 100%;
   padding: 15px;
-  background-color: #535b63;
+  background-color: #26264d;
   border: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
