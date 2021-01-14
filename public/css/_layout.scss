@@ -19,9 +19,9 @@ section#video-area {
     grid-area:video;
     background-color: $video-bg;   
     display: grid;
-    grid-template-columns: repeat(auto-fill, 20%);
+    grid-template-columns: repeat(auto-fill, 270px);
     grid-gap: 10px; 
-    grid-template-rows: 20%;
+    grid-template-rows: 270px;
     overflow: hidden;
 }
 

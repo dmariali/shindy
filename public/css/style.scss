@@ -20,10 +20,33 @@ body {
 
 /* adding video functionality */   
 video {
-    width: 90%;
-    height: 90%;
+    width: 100%;
     object-fit: cover;
-    padding: 5%;
+    border-radius: 25px; 
+    padding: 10px; 
+}
+
+.vid_div {
+    position: relative; 
+    border-radius: 10px; 
+}
+
+.video_toggle {
+    position: absolute; 
+    top: 15%; 
+    left: 15%; 
+    width: 25px; 
+    height: 25px; 
+    background-color: red; 
+}
+
+.audio_toggle {
+    position: absolute; 
+    top: 25%; 
+    left: 15%; 
+    width: 25px; 
+    height: 25px; 
+    background-color: green; 
 }
 
 /* styling for all forms */
@@ -50,7 +73,7 @@ video {
 .general-form  input[type="submit"] {
     width: 100%;
     padding: 15px;
-    background-color: #535b63;
+    background-color: $video-bg;
     border: 0;
     box-sizing: border-box;
     cursor: pointer;
