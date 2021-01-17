@@ -1,9 +1,20 @@
-$bgcolor : white;
-$header-text: rgb(38, 38, 77);  
-$chat-bg : white;
-$video-bg: rgb(38, 38, 77);
-$game-bg: rgb(236, 235, 235);
-$header-bg: #D81159;
-$my-message:#F5E1FD;
-$other-message: #d3d3d3;
-$nav-bg: transparent; 
+// background gradient colors
+$main-bg-start:  #F3FCFC;
+$main-bg-end: #efe6f9; 
+
+// Color Scheme Colors
+$dark-base: #1D0C1F;
+$dark-level-two: #095256;
+$medium: #B91372; 
+$lowlight: #52B788; 
+$highlight: #D7f171;
+$white: white;
+
+$bgcolor : $dark-base;
+$header-text: $white;  
+$chat-bg : $white;
+$video-bg: $dark-base;
+$game-bg: $white;
+$header-bg: $medium;
+$my-message: $dark-base;
+$other-message: $white;

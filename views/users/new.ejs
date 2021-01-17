@@ -1,14 +1,11 @@
-<h1>Register New User</h1>
-
 <div class="general-form">
     <form action="/users" method="POST">
         <input type="text" name="name" placeholder="Name" required>
         <input type="email" name="email" placeholder="Email" required>
         <input type="text" name="username" placeholder="Username" required>
         <input type="password" name="password" placeholder="Password" required>
-        <a href="/users">Cancel</a>
-        <button type="submit">Submit</button>
+        <input type="submit" value="Register"></button>
     </form>
     <br/>
-    <a href='/login'>Already signed up? Login here!</a>
+    <a class="form-footer" href='/login'>Already signed up? Login here!</a>
 </div>

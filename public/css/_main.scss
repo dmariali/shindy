@@ -1,0 +1,21 @@
+html {
+    font-family: Arial, Helvetica, sans-serif; 
+    height: 100vh;
+}
+body {
+	padding: 0;
+    margin: 0;
+    height: 100vh; 
+    box-sizing: border-box;
+    background-color: $bgcolor;
+    overflow: hidden;
+}
+
+.main-content {
+    height: 90%; 
+    overflow: hidden; 
+    background: linear-gradient(180deg, #F3FCFC 0%, #EFE6F9 100%);
+    display: grid; 
+    place-items: center; 
+}
+

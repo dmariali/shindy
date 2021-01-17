@@ -14,7 +14,8 @@ const User = require('../models/user')
 var current_user = {id: 0, name: ""}
 
 router.get('/', (req, res) => {
-  if (req.session.passport) {
+  // Go to the public homepage or user home page based on if they're logged in
+  if (req.session.passport && Object.entries(req.session.passport).length !==0) {
     res.render('index-loggedin.ejs', {logged_in: true, user: current_user})
   } else {
     res.render('index-loggedout.ejs', {logged_in: false, user: {id: 0, name: ""}})

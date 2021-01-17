@@ -1,0 +1,29 @@
+video {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 25px; 
+    padding: 10px; 
+}
+
+.vid_div {
+    position: relative; 
+    border-radius: 10px; 
+}
+
+.video_toggle {
+    position: absolute; 
+    top: 15%; 
+    left: 15%; 
+    width: 25px; 
+    height: 25px; 
+    background-color: red; 
+}
+
+.audio_toggle {
+    position: absolute; 
+    top: 25%; 
+    left: 15%; 
+    width: 25px; 
+    height: 25px; 
+    background-color: green; 
+}

@@ -12,9 +12,9 @@ function getRoomUsers(roomId) {
     //---DEBUG Logs
     //console.log("Room ID: ",roomId)
     // console.log("All Users: ",users)
-    //console.log("Users in the room: ",users.filter(user => user.roomId==roomId))
+    // console.log("Users in the room: ",users.filter(user => user.roomId==roomId))
     
-    return users.filter(user => user.roomid==roomId)
+    return users.filter(user => user.roomId==roomId)
     
 }
 

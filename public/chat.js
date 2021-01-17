@@ -7,6 +7,7 @@ $(function(){
     var send_message = $('#send_message')
     var chatroom = $('#chatroom')
     var video_area = $('#video-area')
+    var user_list_area = $('#user_list')
     var room = JSON.parse(ROOM_ID)
     var user = JSON.parse(USER)
     
@@ -29,8 +30,7 @@ $(function(){
     })
 
     //send message on press of enter inside the message box
-    message.keypress(function(e){    
-      
+    message.keypress(function(e){          
       if(e.keyCode==13){
           send_message.click()
       }
@@ -69,11 +69,14 @@ $(function(){
         } )
 
         
-        socket.on('user_connected', (user,peerId) => {
+        socket.on('user_connected', (user,peerId, user_list) => {
           //send your video input to other users
           connectToNewUser(peerId, stream)
-
-          chatroom.append("<p class='chat_message myMessage'>" + user.name + " has joined the chat </p>")        
+          chatroom.append("<p class='chat_message myMessage'>" + user.name + " has joined the chat </p>") 
+          user_list.forEach(user => {
+            
+            user_list_area.append(`<li>${user.username}</li>`)
+          })            
         })          
     })
     .catch(function(error) {

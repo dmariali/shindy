@@ -1,4 +1,22 @@
-// Logged Out
+// Logged Out / Public Homepage
 .homepage-body {
-    background-color: aqua;
+    display: grid; 
+    align-items: center;
+}
+
+.intro {
+    text-align: center;
+}
+
+.online-party-svg {
+    background: url(../images/online-party.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 50vw; 
+    height: 50vh; 
+}
+
+#balloon-1 {
+    width: 5px; 
+    height: 10px; 
 }
