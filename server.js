@@ -90,7 +90,8 @@ io.on('connection', socket => {
     socket.on('join_room', (user, roomid, socketid,peerId) => {
 	  socket.join(roomid)
 	  userJoin(user.name,socketid,roomid)
-	  socket.to(roomid).broadcast.emit('user_connected', user,peerId)
+	  const user_list = getRoomUsers(roomid)
+	  socket.to(roomid).broadcast.emit('user_connected', user,peerId, user_list)
 	  
     })    
 

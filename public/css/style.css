@@ -1,6 +1,6 @@
 .content-container {
   width: 100%;
-  height: 90%;
+  height: 100%;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 75% 25%;
@@ -15,14 +15,14 @@ section#game-area {
   -ms-grid-row: 1;
   -ms-grid-column: 1;
   grid-area: game;
-  background-color: #ecebeb;
+  background-color: white;
 }
 
 section#video-area {
   -ms-grid-row: 2;
   -ms-grid-column: 1;
   grid-area: video;
-  background-color: #26264d;
+  background-color: #1D0C1F;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (270px)[auto-fill];
@@ -44,16 +44,19 @@ section#chat-area {
 }
 
 header {
-  background-color: #D81159;
-  color: #26264d;
+  background-color: #B91372;
+  color: white;
   text-align: left;
   padding: 20px;
   height: 5%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 h1 {
-  background-color: #D81159;
-  color: #26264d;
+  background-color: #B91372;
+  color: white;
   text-align: left;
   padding: 20px;
   text-transform: uppercase;
@@ -61,9 +64,15 @@ h1 {
 }
 
 #shindy {
-  color: #26264d;
-  font-size: 2em;
+  /* Header 1 */
+  font-style: normal;
+  font-weight: 500;
+  font-size: 64px;
+  text-align: center;
+  text-transform: uppercase;
   text-decoration: none;
+  color: #FFFFFF;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 /* Navigation container */
@@ -87,14 +96,14 @@ h1 {
 /* Links - change color on hover */
 #topnav a:hover {
   background-color: white;
-  color: black;
+  color: #1D0C1F;
 }
 
 /* Make logout button look like the rest of links */
 #logout_button {
   border: none;
-  background-color: #333;
-  color: #f2f2f2;
+  background-color: #1D0C1F;
+  color: white;
   float: right;
   padding-top: 14px;
   padding-bottom: 14px;
@@ -102,8 +111,8 @@ h1 {
 }
 
 #logout_button:hover {
-  background-color: #ddd;
-  color: black;
+  background-color: white;
+  color: #1D0C1F;
 }
 
 section#chatroom {
@@ -148,14 +157,14 @@ section#chatroom p {
 .myMessage {
   margin: 0.5rem 1rem 0.5rem auto;
   border-radius: 1.125rem 1.125rem 0 1.125rem;
-  background: #26264d;
+  background: #333;
   color: white;
 }
 
 .otherMessage {
   margin: 0.5rem;
   border-radius: 1.125rem 1.125rem 1.125rem 0;
-  background-color: #d3d3d3;
+  background-color: white;
   background: #FFF;
 }
 
@@ -169,6 +178,19 @@ section#chatroom p {
   overflow-anchor: auto;
   /* anchor nodes are required to have non-zero area */
   height: 1px;
+}
+
+.slideout-menu {
+  background: url(../images/slideout-menu.svg);
+  background-repeat: no-repeat;
+  background-position: right;
+  position: absolute;
+  right: 0;
+  top: 25vh;
+  height: 500px;
+  width: 300px;
+  color: white;
+  text-align: center;
 }
 
 #game-content {
@@ -300,23 +322,55 @@ section#chatroom p {
 }
 
 .homepage-body {
-  background-color: aqua;
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-/* STYLE */
+.intro {
+  text-align: center;
+}
+
+.online-party-svg {
+  background: url(../images/online-party.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 50vw;
+  height: 50vh;
+}
+
+#balloon-1 {
+  width: 5px;
+  height: 10px;
+}
+
 html {
   font-family: Arial, Helvetica, sans-serif;
-  height: 100%;
+  height: 100vh;
 }
 
 body {
   padding: 0;
   margin: 0;
-  height: 100%;
-  background-color: white;
+  height: 100vh;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: #1D0C1F;
+  overflow: hidden;
 }
 
-/* adding video functionality */
+.main-content {
+  height: 90%;
+  overflow: hidden;
+  background: -webkit-gradient(linear, left top, left bottom, from(#F3FCFC), to(#EFE6F9));
+  background: linear-gradient(180deg, #F3FCFC 0%, #EFE6F9 100%);
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+}
+
 video {
   width: 100%;
   -o-object-fit: cover;
@@ -348,7 +402,7 @@ video {
   background-color: green;
 }
 
-/* styling for all forms */
+/*  Styling for all forms */
 .general-form {
   width: 300px;
   margin: 0 auto;
@@ -376,7 +430,7 @@ video {
 .general-form input[type="submit"] {
   width: 100%;
   padding: 15px;
-  background-color: #26264d;
+  background-color: #1D0C1F;
   border: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;

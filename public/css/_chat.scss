@@ -39,7 +39,7 @@ section#chatroom p {
 .myMessage{
     margin: 0.5rem 1rem 0.5rem auto ;
     border-radius: 1.125rem 1.125rem 0 1.125rem;
-    background: $video-bg;
+    background: #333;
     color: white;
 }
 .otherMessage {
@@ -59,4 +59,17 @@ section#chatroom p {
     overflow-anchor: auto;
     /* anchor nodes are required to have non-zero area */
     height: 1px;
+}
+
+.slideout-menu {
+    background: url(../images/slideout-menu.svg);
+    background-repeat: no-repeat;
+    background-position: right;
+    position: absolute; 
+    right: 0; 
+    top: 25vh;
+    height: 500px; 
+    width: 300px;  
+    color: white;
+    text-align: center; 
 }
