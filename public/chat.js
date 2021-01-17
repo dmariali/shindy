@@ -8,7 +8,8 @@ $(function(){
     var chatroom = $('#chatroom')
     var video_area = $('#video-area')
     var room = JSON.parse(ROOM_ID)
-    var username = JSON.parse(USER).name
+    var user = JSON.parse(USER)
+    
 
     // Peer takes 1- ID, put undefined to let the server handle that
     // then { host: 3001 locally or 'your-app-name.herokuapp.com', port is either 9000 or 443(if using https)}
@@ -16,14 +17,14 @@ $(function(){
     const myPeer = new Peer ()
 
     myPeer.on('open', id => {
-      
-      socket.emit('join_room',  username,room, socket.id)       
+      const peerId = id
+      socket.emit('join_room',  user ,room, socket.id ,peerId)       
     })
 
     // Emit message
     send_message.click(function() {
         
-        socket.emit('new_chat_message', {message:message.val(), user: username}, room)
+        socket.emit('new_chat_message', {message:message.val(), user: user.name}, room)
         message.val('')      
     })
 
@@ -38,7 +39,7 @@ $(function(){
     //Listen on new_chat_message
     socket.on('new_chat_message', (data) => {     
       // change formatting based on who sent the message
-      if (username === data.name) {
+      if (user.name === data.name) {
           // show the message in the chatroom area
           chatroom.append("<p class='chat_message myMessage'>" + data.message + "</p>")
       } else {
@@ -47,9 +48,6 @@ $(function(){
       }      
     })
 
-    socket.on('user_connected', userId => {
-       chatroom.append("<p class='chat_message myMessage'>" + userId + "has joined the chat </p>")
-    })
 
     // get local video input
     const myVideo = document.createElement('video')
@@ -70,17 +68,20 @@ $(function(){
           })
         } )
 
-        //send your video input to other users
-        socket.on('user_connected', userId => {
-          connectToNewUser(userId, stream)        
+        
+        socket.on('user_connected', (user,peerId) => {
+          //send your video input to other users
+          connectToNewUser(peerId, stream)
+
+          chatroom.append("<p class='chat_message myMessage'>" + user.name + " has joined the chat </p>")        
         })          
     })
     .catch(function(error) {
         console.warn(error.message)
     }); 
     
-    function connectToNewUser (userId, stream) {
-      const call = myPeer.call(userId, stream)
+    function connectToNewUser (peerId, stream) {
+      const call = myPeer.call(peerId, stream)
       const video = document.createElement('video')
 
       // when OTHER user sends back their video stream, we get this

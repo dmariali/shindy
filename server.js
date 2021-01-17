@@ -87,10 +87,10 @@ io.on('connection', socket => {
     //default username
     socket.username = "Anonymous"
 
-    socket.on('join_room', (username, roomid, socketid) => {
+    socket.on('join_room', (user, roomid, socketid,peerId) => {
 	  socket.join(roomid)
-	  userJoin(username,socketid,roomid)
-	  socket.to(roomid).broadcast.emit('user_connected', username)
+	  userJoin(user.name,socketid,roomid)
+	  socket.to(roomid).broadcast.emit('user_connected', user,peerId)
 	  
     })    
 
