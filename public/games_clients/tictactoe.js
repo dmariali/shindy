@@ -7,7 +7,7 @@ $(document).ready(function() {
     var room = JSON.parse(ROOM_ID)
     
     //Emitted when a new socket joins the room
-    socket.emit('join_room', room, socket.id)
+   // socket.emit('join_room', room, socket.id)
          
 
 	socket.on('matched', function() {

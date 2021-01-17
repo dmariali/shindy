@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== "production") {
   require('dotenv').config()
 }
 
+
 //  LAUNCH SERVER AND ALL PACKAGES
 const express = require ('express')
 const app = express()
@@ -10,6 +11,8 @@ const expressLayouts = require('express-ejs-layouts')
 // use the environment port (for heroku deployment) or 3000 if used locally
 const PORT = process.env.PORT || 3000
 
+//Import utility functions for user actions from utils.js
+const {userJoin,userLeave, getRoomUsers} = require('./utils')
 // show flash messages
 const flash = require ('express-flash')
 const session = require ('express-session')
@@ -84,30 +87,27 @@ io.on('connection', socket => {
     //default username
     socket.username = "Anonymous"
 
-    socket.on('join_room', (roomId, userId) => {
-      socket.join(roomId)
-      socket.to(roomId).broadcast.emit('user_connected', userId)
-
-      // socket.on('disconnect', () => {
-      //   socket.to(roomId).broadcast.emit('user_disconnected', userId)
-      // })
+    socket.on('join_room', (username, roomid, socketid) => {
+	  socket.join(roomid)
+	  userJoin(username,socketid,roomid)
+	  socket.to(roomid).broadcast.emit('user_connected', username)
+	  
     })    
 
     //listen on new_chat_message
     socket.on('new_chat_message', (data, roomId) => {
         //emit the new message
-        io.to(roomId).emit('new_chat_message', {message:data.message, name: data.user})
+		io.to(roomId).emit('new_chat_message', {message:data.message, name: data.user})
     })  
 
 
     //Tic-Tac-Toe
 
-  
-
-
-	addPlayer(socket);
+  	addPlayer(socket);
 
 	socket.on('disconnect', function() {
+		userLeave(socket.id)
+		
 		if (socket.paired) {
 			io.to(socket.gameId).emit('opponent-disconnected');
 			games[socket.gameId].players[0].socket.paired = false;
@@ -119,6 +119,8 @@ io.on('connection', socket => {
 			delete socket.pin;
 			pinCount--;
 		}
+
+		
 	});
 
 	socket.on('move', function(index) {
@@ -162,7 +164,7 @@ var addPlayer = function(socket) {
 	unpairedPins[socket.pin] = socket;
 	pinCount++;
 	socket.emit('pin', socket.pin);
-  console.log("AddPlayer Function Run on server with socket.pin ", socket.pin," emitted")
+  //console.log("AddPlayer Function Run on server with socket.pin ", socket.pin," emitted")
 };
 
 var pairPlayers = function(socket1, socket2) {
