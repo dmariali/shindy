@@ -7,6 +7,8 @@ $(function(){
     var send_message = $('#send_message')
     var chatroom = $('#chatroom')
     var video_area = $('#video-area')
+    var room = JSON.parse(ROOM_ID)
+    var username = JSON.parse(USER).name
 
     // Peer takes 1- ID, put undefined to let the server handle that
     // then { host: 3001 locally or 'your-app-name.herokuapp.com', port is either 9000 or 443(if using https)}
@@ -14,17 +16,15 @@ $(function(){
     const myPeer = new Peer ()
 
     myPeer.on('open', id => {
-      var room = JSON.parse(ROOM_ID)
-      socket.emit('join_room', room, id)     
-      console.log("Join room request emitted")  
+      
+      socket.emit('join_room',  username,room, socket.id)       
     })
 
     // Emit message
     send_message.click(function() {
-        var name = JSON.parse(USER).name
-        var room = JSON.parse(ROOM_ID)
-        socket.emit('new_chat_message', {message:message.val(), user: name}, room)
-        message.val('')
+        
+        socket.emit('new_chat_message', {message:message.val(), user: username}, room)
+        message.val('')      
     })
 
     //send message on press of enter inside the message box
@@ -36,11 +36,9 @@ $(function(){
     })
 
     //Listen on new_chat_message
-    socket.on('new_chat_message', (data) => {
-      var current_user = JSON.parse(USER).name     
-      
+    socket.on('new_chat_message', (data) => {     
       // change formatting based on who sent the message
-      if (current_user === data.name) {
+      if (username === data.name) {
           // show the message in the chatroom area
           chatroom.append("<p class='chat_message myMessage'>" + data.message + "</p>")
       } else {
@@ -50,7 +48,7 @@ $(function(){
     })
 
     socket.on('user_connected', userId => {
-      // chatroom.append("<p class='chat_message myMessage'>" + userId + "has joined the chat </p>")
+       chatroom.append("<p class='chat_message myMessage'>" + userId + "has joined the chat </p>")
     })
 
     // get local video input
@@ -74,7 +72,7 @@ $(function(){
 
         //send your video input to other users
         socket.on('user_connected', userId => {
-          connectToNewUser(userId, stream)
+          connectToNewUser(userId, stream)        
         })          
     })
     .catch(function(error) {
