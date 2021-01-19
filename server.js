@@ -2,7 +2,6 @@ if (process.env.NODE_ENV !== "production") {
   require('dotenv').config()
 }
 
-
 //  LAUNCH SERVER AND ALL PACKAGES
 const express = require ('express')
 const app = express()
@@ -11,8 +10,13 @@ const expressLayouts = require('express-ejs-layouts')
 // use the environment port (for heroku deployment) or 3000 if used locally
 const PORT = process.env.PORT || 3000
 
+//----Require Custom built modules-------
 //Import utility functions for user actions from utils.js
 const {userJoin,userLeave, getRoomUsers} = require('./utils')
+
+const tictactoe_server = require('./games_servers/tictactoe_server')
+
+
 // show flash messages
 const flash = require ('express-flash')
 const session = require ('express-session')
@@ -73,19 +77,16 @@ const server = require('http').Server(app)
 server.listen(PORT, () => {
     console.log(`listening on ${PORT}`)
 })
+//socket.io instantiation. The exports.io statement allows the io server to be used by other modules. See tictactoe_server.js for an example
+const io = exports.io = require("socket.io")(server)
 
-//socket.io instantiation
-const io = require("socket.io")(server)
+//------------ CONFIGURING CHATROOM COMMUNICATIONS ----------------
 
-//Tic tac toe game variables
-var gameIndex = 0, games = {};
-var unpairedPins = [], maxPin = 10000, pinCount = 0;
+//Define chat namespace 
+const chatNsp = io.of('/chatNsp')
 
-//listen on every connection 
-io.on('connection', socket => {
-    
-    //default username
-    socket.username = "Anonymous"
+//listen on every connection
+chatNsp.on('connection', socket => {
 
     socket.on('join_room', (user, roomid, socketid,peerId) => {
 	  socket.join(roomid)
@@ -98,141 +99,16 @@ io.on('connection', socket => {
     //listen on new_chat_message
     socket.on('new_chat_message', (data, roomId) => {
         //emit the new message
-		io.to(roomId).emit('new_chat_message', {message:data.message, name: data.user})
-    })  
-
-
-    //Tic-Tac-Toe
-
-  	addPlayer(socket);
-
-	socket.on('disconnect', function() {
+		chatNsp.to(roomId).emit('new_chat_message', {message:data.message, name: data.user})
+	}) 
+	
+	
+	socket.on('disconnect' , socket => {
 		userLeave(socket.id)
-		
-		if (socket.paired) {
-			io.to(socket.gameId).emit('opponent-disconnected');
-			games[socket.gameId].players[0].socket.paired = false;
-			games[socket.gameId].players[1].socket.paired = false;
-			delete games[socket.gameId];
-			delete socket.gameId;
-		} else {
-			delete unpairedPins[socket.pin];
-			delete socket.pin;
-			pinCount--;
-		}
+	} ) 
 
-		
-	});
+})
 
-	socket.on('move', function(index) {
-		var game = games[socket.gameId];
-		index = parseInt(index, 10);
+//------------ RUNNING GAME SERVERS ----------------
 
-		if (socket.paired && typeof index === 'number' && 0 <= index && index < 10 && game.players[game.turn].socket.id === socket.id && typeof game.filled[index] !== 'number') {
-			game.filled[index] = game.turn;
-			game.turn++;
-			game.turn %= 2;
-
-			io.to(game.players[game.turn].socket.id).emit('opponent-moved', index);
-
-			if (isFinished(game.filled)) {
-				game.players[0].socket.paired = false;
-				game.players[1].socket.paired = false;
-				delete games[socket.gameId];
-				delete game.players[0].socket.gameId;
-				delete game.players[1].socket.gameId;
-			}
-		}
-	});
-
-	socket.on('play-again', function() {
-		if (!socket.paired) {
-			addPlayer(socket);
-		}
-	});
-
-	socket.on('enter-pin', function(opponentPin) {
-		if (!socket.paired && typeof unpairedPins[opponentPin] === 'object' && opponentPin != socket.pin && unpairedPins[opponentPin].pin === opponentPin && typeof socket.pin === 'number') {
-			pairPlayers(socket, unpairedPins[opponentPin]);
-		} else {
-			socket.emit('invalid-pin');
-		}
-	});
-});
-
-var addPlayer = function(socket) {
-	socket.pin = generatePin();
-	unpairedPins[socket.pin] = socket;
-	pinCount++;
-	socket.emit('pin', socket.pin);
-  //console.log("AddPlayer Function Run on server with socket.pin ", socket.pin," emitted")
-};
-
-var pairPlayers = function(socket1, socket2) {
-	if (socket1 !== socket2 && !socket1.paired && !socket2.paired) {
-		var gameId = 'game' + gameIndex;
-		gameIndex++;
-
-		socket1.paired = true;
-		socket2.paired = true;
-		socket1.gameId = gameId;
-		socket2.gameId = gameId;
-		socket1.join(gameId);
-		socket2.join(gameId);
-
-		delete unpairedPins[socket1.pin];
-		delete unpairedPins[socket2.pin];
-		delete socket1.pin;
-		delete socket2.pin;
-
-		pinCount -= 2;
-
-		var firstTurn = Math.floor(Math.random() * 2);
-
-
-    //Games definition
-		games[gameId] = {
-			'players':[
-				{'socket': socket1, 'id': socket1.id},
-				{'socket': socket2, 'id': socket2.id}
-			],
-			'turn': firstTurn,
-			'filled': []
-		};
-
-		io.to(socket1.id).emit('start-game', firstTurn);
-		io.to(socket2.id).emit('start-game', 1 - firstTurn);
-	}
-};
-
-var isFinished = function(filled) {
-	var positions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
-	var i, filledCount = 0;
-
-	for (i = 0; i < positions.length; i++) {
-		if (typeof filled[positions[i][0]] === 'number' && filled[positions[i][0]] === filled[positions[i][1]] && filled[positions[i][1]] === filled[positions[i][2]]) {
-			return true;
-		}
-	}
-
-	for (i = 0; i < filled.length; i++) {
-		if (typeof filled[i] === 'number') filledCount++;
-	}
-
-	return filledCount >= 9;
-};
-
-
-var generatePin = function() {
-	if (2 * pinCount > maxPin) {
-		maxPin *= 2;
-	}
-
-	var pin;
-
-	do {
-		pin = Math.floor(Math.random() * maxPin);
-	} while (typeof unpairedPins[pin] !== 'undefined');
-
-	return pin;
-};
+tictactoe_server.tictactoe_server()

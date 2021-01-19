@@ -1,14 +1,9 @@
-//console.log("Tic-Tac-Toe client file")
+//Tic-Tac-Toe client file
 
 $(document).ready(function() {
-	const socket = io();
+	const socket = io('/gameNsp');
 	var canMove = false, playAs = 'o', board = [];
 
-    var room = JSON.parse(ROOM_ID)
-    
-    //Emitted when a new socket joins the room
-   // socket.emit('join_room', room, socket.id)
-         
 
 	socket.on('matched', function() {
 		addMessage('Opponent\'s turn (x)');

@@ -1,6 +1,6 @@
 $(function(){
     //make connection
-    const socket = io()
+    const socket = io('/chatNsp')
 
     //buttons and inputs
     var message = $('#message')
