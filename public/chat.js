@@ -10,95 +10,138 @@ $(function(){
     var user_list_area = $('#user_list')
     var room = JSON.parse(ROOM_ID)
     var user = JSON.parse(USER)
+    var debug_btn = $(".debug_btn")
     
 
     // Peer takes 1- ID, put undefined to let the server handle that
     // then { host: 3001 locally or 'your-app-name.herokuapp.com', port is either 9000 or 443(if using https)}
     // if using https include secure: true
     const myPeer = new Peer ()
+    var gblPartnerPeerId = "NoPartner"
+    var gblUsrVideoStream = ""
+    var gblUsrMediaConnection = ""
 
     myPeer.on('open', id => {
-      const peerId = id
-      socket.emit('join_room',  user ,room, socket.id ,peerId)       
-    })
-
-    // Emit message
-    send_message.click(function() {
-        
-        socket.emit('new_chat_message', {message:message.val(), user: user.name}, room)
-        message.val('')      
-    })
-
-    //send message on press of enter inside the message box
-    message.keypress(function(e){          
-      if(e.keyCode==13){
-          send_message.click()
-      }
-    })
-
-    //Listen on new_chat_message
-    socket.on('new_chat_message', (data) => {     
-      // change formatting based on who sent the message
-      if (user.name === data.name) {
-          // show the message in the chatroom area
-          chatroom.append("<p class='chat_message myMessage'>" + data.message + "</p>")
-      } else {
-          // show the message in the chatroom area
-          chatroom.append("<p class='chat_message otherMessage'> <em>" + data.name + "</em>: " + data.message + "</p>")
-      }      
+      user.peerId = id //bind a user's peerID to the user object
+      user.room = room //Room id
+      user.socketid = socket.id //socket id of the user connection
+      socket.emit('join_room',  user)       
     })
 
 
-    // get local video input
-    const myVideo = document.createElement('video')
-    myVideo.muted = true
-
+//################ PEER JS SIGNALS ########################
+    // Get local video input
+    //navigator.mediaDevices gets the media stream of the local video and/or audio stream.
     navigator.mediaDevices.getUserMedia({video:true, audio:false})
     .then(stream => {
-        addVideoStream (myVideo, stream)
+        addVideoStream (stream, muted=true)
 
         myPeer.on('call', call => {
-          // get stream when a new user joins the call
+          // When someone calls you answer the call and send your video stream
+          gblUsrMediaConnection = call
           call.answer(stream)
+          console.log("PeerId on other end of this call: ",call.peer)
+          
+          gblPartnerPeerId = call.peer //saving the peerid of the person on the other side of the call to a global variable
 
           // send your stream when a new user joins the call
-          const video = document.createElement('video')
           call.on('stream', userVideoStream => {
-            addVideoStream(video, userVideoStream)
+            //Add the user's video stream to the pa when they start sending it.
+            gblUsrVideoStream = userVideoStream
+            addVideoStream(userVideoStream)
+            console.log("I have initiated this call")
+            console.log("Media Stream of Peer: ",userVideoStream)
+         
           })
-        } )
+        })
 
-        
-        socket.on('user_connected', (user,peerId, user_list) => {
+//################ SOCKET IO SIGNALS ########################
+
+        //Emitted to everyone except the user who connected
+        socket.on('user_connected', (user, user_list) => {
           //send your video input to other users
-          connectToNewUser(peerId, stream)
+          connectToNewUser(user.peerId, stream)
           chatroom.append("<p class='chat_message myMessage'>" + user.name + " has joined the chat </p>") 
           user_list.forEach(user => {
-            
-            user_list_area.append(`<li>${user.username}</li>`)
-          })            
-        })          
-    })
-    .catch(function(error) {
-        console.warn(error.message)
-    }); 
+          user_list_area.append(`<li>${user.name}</li>`)
+          })   
     
-    function connectToNewUser (peerId, stream) {
-      const call = myPeer.call(peerId, stream)
+        })          
+          })
+          .catch(function(error) {
+              console.warn(error.message)
+          }); 
+
+            // Emit message
+            send_message.click(function() {
+                
+              socket.emit('new_chat_message', {message:message.val(), user: user.name}, room)
+              message.val('')      
+          })
+
+          //send message on press of enter inside the message box
+          message.keypress(function(e){          
+            if(e.keyCode==13){
+                send_message.click()
+            }
+          })
+
+          //Listen on new_chat_message
+        socket.on('new_chat_message', (data) => {     
+            // change formatting based on who sent the message
+            if (user.name === data.name) {
+                // show the message in the chatroom area
+                chatroom.append("<p class='chat_message myMessage'>" + data.message + "</p>")
+            } else {
+                // show the message in the chatroom area
+                chatroom.append("<p class='chat_message otherMessage'> <em>" + data.name + "</em>: " + data.message + "</p>")
+            }      
+          })
+
+        socket.on('user_disconnected',(userWhoLeft)=>{
+          console.log("User Disconnected event in Chat JS fired")
+          console.log("PeerId of user who left: ",userWhoLeft.peerId)
+          console.log("Partner PeerId: ",gblPartnerPeerId)
+          console.log("MediaConnection of Call: ",gblUsrMediaConnection)
+          
+        //  if(gblPartnerPeerId == userWhoLeft.peerId){
+            // console.log("video Closed")
+            // console.log("Media Stream of Peer after user disconnected: ",stream)
+           
+            gblUsrMediaConnection.close() //Closes the media connection
+            gblUsrMediaConnection.on('close', () => {
+            console.log("Call OVER!")
+            video.remove()
+            })
+            console.log("Is the Stream still Open?: ",gblUsrMediaConnection.open)
+            removeVideoStream(gblUsrVideoStream)
+            //video.remove()
+        //  }
+
+        })
+         
+//################ HELPER FUNCTIONS ########################
+
+
+      function connectToNewUser (peerId, stream) {
+        const call = myPeer.call(peerId, stream) //call is a mediaConnection object
+        gblUsrMediaConnection = call
+        // when OTHER user sends back their video stream, we get this
+        // signal 'stream' which provides THEIR mediaConnection stream object and we add it to
+        //a video/canvas element using the addVideoStream function.
+        call.on('stream', userVideoStream => {
+         // console.log(userVideoStream)
+         gblUsrVideoStream = userVideoStream
+          addVideoStream(userVideoStream)
+        })
+
+      }
+
+    //addVideoStream sets up the video element of the page with the stream and starts playing it.
+    //It also takes case of the canvas layout and positioning of the video on the page
+    function addVideoStream (stream, muted = true) {
       const video = document.createElement('video')
-
-      // when OTHER user sends back their video stream, we get this
-      // signal 'stream' which takes in THEIR stream
-      call.on('stream', userVideoStream => {
-        addVideoStream(video, userVideoStream)
-      })
-
-      call.on('close', () => {
-        video.remove()
-      })
-    }
-
-    function addVideoStream (video, stream) {
+      video.muted = muted
       video.srcObject = stream
       video.addEventListener ('loadedmetadata', () => {
         // once this stream is loaded onto our page, play the video
@@ -106,6 +149,7 @@ $(function(){
       })
       const vid_div = document.createElement("div")
       vid_div.className = "vid_div"
+      vid_div.id = stream.id
       vid_div.appendChild(video)
 
       const video_toggle = document.createElement("div");
@@ -118,4 +162,16 @@ $(function(){
 
       video_area.append(vid_div)
     } 
+
+    //Removes a video stream from the canvas
+    function removeVideoStream(stream) { 
+      console.log(`"Stream ID inside removeVideoStream:" #${stream.id}`)
+      $(`#${stream.id}`).remove()
+    }
+
+    //A debug Button used for getting the value of variables at any point.
+    debug_btn.click(() =>{
+      console.log(myPeer.connections)
+    })
+
 })
