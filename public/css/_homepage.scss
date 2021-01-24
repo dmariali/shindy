@@ -9,14 +9,66 @@
 }
 
 .online-party-svg {
-    background: url(../images/online-party.svg);
-    background-repeat: no-repeat;
-    background-position: center;
     width: 50vw; 
     height: 50vh; 
+
+    //Add movement to the balloons
+    #balloon, #balloon_2, #balloon_3, #balloon_4, #balloon_5, #Vector, #Vector_2, #Vector_30, #Vector_31, #Vector_32 {
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-direction: alternate-reverse; 
+    }
+    #balloon_2, #Vector_2 {
+        animation-name: float_up_1; 
+        animation-duration: 3s;
+        animation-timing-function: ease-in-out;
+    }
+    #balloon_3, #Vector_30 {
+        animation-name: float_up_3; 
+        animation-duration: 4s;
+        animation-timing-function: cubic-bezier(0.4, 0.62, 0.18, 0.4);;
+    }
+    #balloon_4, #Vector_31 {
+        animation-name: float_up_1; 
+        animation-duration: 5s;
+        animation-timing-function: ease-in-out;
+    }
+    #balloon_5, #Vector_32 {
+        animation-name: float_up_3; 
+        animation-duration: 3s;
+        animation-timing-function: cubic-bezier(0.4, 0.62, 0.18, 0.4);;
+    }
+    #balloon, #Vector {
+        animation-name: float_up_2; 
+        animation-duration: 4s;
+        animation-timing-function: ease-in-out;
+    }
 }
 
-#balloon-1 {
-    width: 5px; 
-    height: 10px; 
+@keyframes float_up_1 {
+    0% {
+        transform: translate(-200px, 500px);
+    }
+    100% {
+        transform: translate(0, 0); 
+    }
+}
+@keyframes float_up_2 {
+    0% {
+        transform: translate(200px, 400px);
+    }
+    100% {
+        transform: translate(0, 0); 
+    }
+}
+@keyframes float_up_3 {
+    0% {
+        transform: translate(-200px, 500px);
+    }
+    50% {
+        transform: translate(50px, 300px);
+    }
+    100% {
+        transform: translate(0, 0); 
+    }
 }
