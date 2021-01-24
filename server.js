@@ -88,11 +88,12 @@ const chatNsp = io.of('/chatNsp')
 //listen on every connection
 chatNsp.on('connection', socket => {
 
-    socket.on('join_room', (user, roomid, socketid,peerId) => {
-	  socket.join(roomid)
-	  userJoin(user.name,socketid,roomid)
-	  const user_list = getRoomUsers(roomid)
-	  socket.to(roomid).broadcast.emit('user_connected', user,peerId, user_list)
+    socket.on('join_room', (user) => {
+	  socket.join(user.room)
+	  userJoin(user)
+	  const user_list = getRoomUsers(user.room)
+    socket.to(user.room).broadcast.emit('user_connected', user,user_list)
+    console.log("User List on Userconnected: ",user_list.map(user=>user.name))
 	  
     })    
 
@@ -102,10 +103,39 @@ chatNsp.on('connection', socket => {
 		chatNsp.to(roomId).emit('new_chat_message', {message:data.message, name: data.user})
 	}) 
 	
-	
-	socket.on('disconnect' , socket => {
-		userLeave(socket.id)
+  socket.on('disconnecting',()=>{
+    socket_rooms = Object.keys(socket.rooms).splice(1,Object.keys(socket.rooms).length-1)
+    socket_id = socket.id //socketID of departing socket
+    try {
+      userWhoLeft = userLeave(socket_id)[0]//remove user from user array
+      console.log("Disconnecting Socket's Username: ", userWhoLeft.name)
+
+    new_room_list = getRoomUsers(socket_rooms[0]) //get list of users in room
+    console.log("Users left in that socket's room",new_room_list.map(user=>user.name))
+
+    //Emit to all users in the chat namespace the user who has left
+    io.of('/chatNsp').emit('user_disconnected',userWhoLeft)
+
+    } 
+    catch(error){"No users to be disconnected . Error: "+ error}
+      
+   
+    
+    
+
+  })
+  
+	socket.on('disconnect' , reason => {
+    //Use this later on for trying to reconnect a socket if the internet connection breaks or 
+    //the user loses connection to the server due to server trouble.
+    console.log("Disconnect Event - Reason for userLeave : ",reason)
+    
 	} ) 
+	// socket.on('disconnect' , socket => {
+  //   console.log("Socket id passed into userLeave : ",socket.id)
+  //   var disconnected_user = userLeave(socket.id)
+  //   console.log("Disconnected User: ",disconnected_user)
+	// } ) 
 
 })
 

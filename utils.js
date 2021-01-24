@@ -14,13 +14,13 @@ function getRoomUsers(roomId) {
     // console.log("All Users: ",users)
     // console.log("Users in the room: ",users.filter(user => user.roomId==roomId))
     
-    return users.filter(user => user.roomId==roomId)
+    return users.filter(user => user.room==roomId)
     
 }
 
 //Adds a user to the users array
-function userJoin(username,socketid, roomId){
-    const user = {username,socketid,roomId}
+function userJoin(user){
+    //const user = {username,socketid,roomId}
     users.push(user)
     return user
 }
@@ -28,7 +28,7 @@ function userJoin(username,socketid, roomId){
 //Drops a user from the user array
 function userLeave(socketid){
     const index = users.findIndex(user => user.socketid==socketid)
-
+    console.log("Index of departed User's socket.id ",index)
     if(index!== -1){
         return users.splice(index,1)
     }
