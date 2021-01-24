@@ -8,14 +8,17 @@
     <!-- Area where game will show -->
     <section id = "game-area">
       <%- include ('../views/games_views/tictactoe.ejs') %>
-   
+      <div class="game-bottom-slider"></div> 
+      <div class="game-side-slider"></div> 
+      <div id="room-users-list"></div>
     </section>
 
     <!-- Area where video will show -->
-    <section id="video-area"> </section>
+    <section id="video-area"> <div class="video-slider"></div> </section>
     
     <!-- area for text chat -->
     <section id= "chat-area">
+      <div class="chat-slider"></div> 
       <!-- Area where messages are displayed -->
       <div id="scroller">
         <!-- append content here -->
@@ -28,7 +31,6 @@
         <button id="send_message" class="vertical-align" type="button">Send</button>
       </section>
   </section>
-  <div class="slideout-menu"> <ul id="user_list"></ul> </div>
   </div>   
        
 </div>      

@@ -4,6 +4,13 @@
     width: 300px;
     margin: 0 auto;
     font-family: Tahoma, Geneva, sans-serif;
+    background-color: $dark-base; 
+    padding: 5% 2%; 
+    box-shadow: 10px 10px 16px 10px rgba(123, 123, 123, 0.25);
+
+    a {
+        color: $lowlight; 
+    }
 }
 .general-form  h1 {
     text-align: center;
@@ -23,10 +30,10 @@
 .general-form  input[type="submit"] {
     width: 100%;
     padding: 15px;
-    background-color: $video-bg;
+    background-color: $highlight;
     border: 0;
     box-sizing: border-box;
     cursor: pointer;
     font-weight: bold;
-    color: $white;
+    color: $dark-base;
 }
