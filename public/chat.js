@@ -7,9 +7,16 @@ $(function(){
     var send_message = $('#send_message')
     var chatroom = $('#chatroom')
     var video_area = $('#video-area')
-    var user_list_area = $('#user_list')
+    var content_container = $('.content-container')
+    var user_list_area = $('#room-users-list')
     var room = JSON.parse(ROOM_ID)
     var user = JSON.parse(USER)
+
+    //sliders
+    var video_slider = $('.video-slider')
+    var game_bottom_slider = $('.game-bottom-slider')
+    var chat_slider = $('.chat-slider')
+    var game_side_slider = $('.game-side-slider')
     
 
     // Peer takes 1- ID, put undefined to let the server handle that
@@ -73,9 +80,8 @@ $(function(){
           //send your video input to other users
           connectToNewUser(peerId, stream)
           chatroom.append("<p class='chat_message myMessage'>" + user.name + " has joined the chat </p>") 
-          user_list.forEach(user => {
-            
-            user_list_area.append(`<li>${user.username}</li>`)
+          user_list.forEach(user => {            
+            updateUserList (user)
           })            
         })          
     })
@@ -117,5 +123,52 @@ $(function(){
       vid_div.appendChild(audio_toggle)
 
       video_area.append(vid_div)
-    } 
+    }
+    
+    // Add grid changes when sliders are clicked
+    video_slider.click(function() {
+      if (content_container.css("grid-template-areas") === '"game game" "video video"') {
+        // if chat already hidden - show only game
+        content_container.css("grid-template-areas", '"game game" "game game"')
+      } else {
+        content_container.css("grid-template-areas", '"game chat" "game chat"')
+      }
+      game_bottom_slider.css("display", "block")   
+    })
+    chat_slider.click(function() {
+      if (content_container.css("grid-template-areas") === '"game chat" "game chat"') {
+        content_container.css("grid-template-areas", '"game game" "game game"')
+      } else {
+        content_container.css("grid-template-areas", '"game game" "video video"')
+      } 
+      game_side_slider.css("display", "block")   
+    })
+    game_bottom_slider.click(function() {
+      if (content_container.css("grid-template-areas") === '"game game" "game game"') {
+        content_container.css("grid-template-areas", '"game game" "video video"')
+      } else {
+        content_container.css("grid-template-areas", '"game chat" "video chat"')
+      }
+      game_bottom_slider.css("display", "none")      
+    })
+    game_side_slider.click(function() { 
+      if (content_container.css("grid-template-areas") === '"game game" "game game"') {
+        content_container.css("grid-template-areas", '"game chat" "game chat"')
+      } else {
+        content_container.css("grid-template-areas", '"game chat" "video chat"')
+      }    
+      game_side_slider.css("display", "none")      
+    })
+
+    function updateUserList (user) {
+      const user_div = document.createElement("div")
+      user_div.className = "user_div"
+
+      const first_letter = user.username[0]
+      const initial_text = document.createElement("p")
+      initial_text.innerHTML = first_letter
+      user_div.appendChild(initial_text)
+
+      user_list_area.append(user_div)
+    }
 })
