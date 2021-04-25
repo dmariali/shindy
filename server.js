@@ -91,15 +91,16 @@ chatNsp.on('connection', socket => {
     socket.on('join_room', (user) => {
 	  socket.join(user.room)
 	  userJoin(user)
-	  const user_list = getRoomUsers(user.room)
-    socket.to(user.room).broadcast.emit('user_connected', user,user_list)
+    const user_list = getRoomUsers(user.room)
+    //Emit to all users in the room including the sender
+    socket.to(user.room).emit('user_connected', user,user_list)
     console.log("User List on Userconnected: ",user_list.map(user=>user.name))
 	  
     })    
 
     //listen on new_chat_message
     socket.on('new_chat_message', (data, roomId) => {
-        //emit the new message
+        //emit the new message to everyone in the room including sender
 		chatNsp.to(roomId).emit('new_chat_message', {message:data.message, name: data.user})
 	}) 
 	
