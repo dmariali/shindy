@@ -29,6 +29,7 @@ const mongoose = require("mongoose");
 // set up database connection
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
+  useUnifiedTopology: true 
 });
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
